@@ -44,7 +44,7 @@ print "Done"
 # camera.vflip = True
 
 s=80	#Initialize
-index=0
+imgid=0
 while True:
 	set_speed(s)	#Update the speed
 	p.update()			#Read the ps3 values
