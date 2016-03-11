@@ -34,11 +34,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/gpl-3.0.txt>.
 ########################################################################
 from ps3 import *		#Import the PS3 library
 from gopigo import *	#Import the GoPiGo library
+import picamera
 
-print "Initialasdadsizing"
+print "Initializing"
+camera = picamera.PiCamera()
+camera.vflip = True
+
 p=ps3()		#Create a PS3 object
 print "Done"
 s=80	#Initialize
+index=0
 while True:
 	set_speed(s)	#Update the speed
 	p.update()			#Read the ps3 values
@@ -52,8 +57,16 @@ while True:
 		bwd()
 	elif p.cross:		#If CROSS is pressed stop
 		stop()
+    elif p.circle:
+        led_on(LED_L)
+        led_on(LED_R)
+    elif p.square:
+        camera.capture('image'+str(index)+'.jpg')
+        index += 1
 	else:
 		stop()
+        led_off(LED_L)
+        led_off(LED_R)
 	if p.l2:			#Increase the speed if L2 is pressed
 		print s
 		s+=2
