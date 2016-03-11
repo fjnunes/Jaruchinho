@@ -38,9 +38,8 @@ from gopigo import *	#Import the GoPiGo library
 print "Initializing"
 p=ps3()		#Create a PS3 object
 print "Done"
-s=150	#Initialize
+s=80	#Initialize
 run=1
-flag=0
 while True:
 	if run:
 		set_speed(s)	#Update the speed
@@ -52,12 +51,10 @@ while True:
 	elif p.left:		#If LEFT is pressed turn left
 		if run:
 			left()
-			flag=1
 		print "l"
 	elif p.right:		#If RIGHT is pressed move right
 		if run:
 			right()
-			flag=1
 		print "r"
 	elif p.down:		#If DOWN is pressed go back
 		if run:
@@ -68,9 +65,7 @@ while True:
 			stop()
 		print "s"
 	else:
-		if flag:		#If LEFT or RIGHT key was last pressed start moving forward again
-			fwd()
-			flag=0
+		stop()
 	if p.l2:			#Increase the speed if L2 is pressed
 		print s
 		s+=2
