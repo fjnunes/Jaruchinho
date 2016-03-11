@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-sudo pkill -f jaruchinho.py
+sudo pkill -SIGKILL -f jaruchinho.py
 
 git pull
 
