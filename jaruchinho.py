@@ -40,8 +40,8 @@ print "Initializing"
 p=ps3()		#Create a PS3 object
 print "Done"
 
-camera = picamera.PiCamera()
-camera.vflip = True
+# camera = picamera.PiCamera()
+# camera.vflip = True
 
 s=80	#Initialize
 index=0
@@ -62,7 +62,7 @@ while True:
 		led_on(LED_L)
 		led_on(LED_R)
 	elif p.square:
-		camera.capture('image'+str(index)+'.jpg')
+		# camera.capture('image'+str(index)+'.jpg')
 		index += 1
 	else:
 		stop()
