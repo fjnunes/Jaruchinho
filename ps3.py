@@ -52,6 +52,7 @@ class ps3:
 		sys.stdout = os.fdopen(sys.stdout.fileno(), 'w', 0)
 		
 		pygame.init()
+		print "pygame.init"
 		pygame.joystick.init()
 		ps3.joystick = pygame.joystick.Joystick(0)
 		ps3.joystick.init()
