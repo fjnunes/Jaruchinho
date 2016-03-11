@@ -34,7 +34,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/gpl-3.0.txt>.
 ########################################################################
 from ps3 import *		#Import the PS3 library
 from gopigo import *	#Import the GoPiGo library
-import picamera
+# import picamera
 
 print "Initializing"
 p=ps3()		#Create a PS3 object
