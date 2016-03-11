@@ -64,11 +64,13 @@ while True:
 		camera.capture('image' + str(imgid) + '.jpg')
 		imgid += 1
 	elif p.triangle:
-		camera.start_recording('video.h264')
-		recording = True
+		if not recording:
+			camera.start_recording('video.h264')
+			recording = True
 	elif p.cross:
-		camera.stop_recording()
-		recording = False
+		if recording:
+			camera.stop_recording()
+			recording = False
 	else:
 		stop()
 		led_off(LED_L)
