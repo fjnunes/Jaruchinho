@@ -52,16 +52,8 @@ while True:
 		bwd()
 	elif p.cross:		#If CROSS is pressed stop
 		stop()
-	elif p.circle:
-		led_on(LED_L)
-		led_on(LED_R)
-	elif p.square:
-		camera.capture('image'+str(index)+'.jpg')
-		index += 1
 	else:
 		stop()
-		led_off(LED_L)
-		led_off(LED_R)
 	if p.l2:			#Increase the speed if L2 is pressed
 		print s
 		s+=2
