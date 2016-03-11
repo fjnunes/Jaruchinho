@@ -37,11 +37,12 @@ from gopigo import *	#Import the GoPiGo library
 import picamera
 
 print "Initializing"
+p=ps3()		#Create a PS3 object
+print "Done"
+
 camera = picamera.PiCamera()
 camera.vflip = True
 
-p=ps3()		#Create a PS3 object
-print "Done"
 s=80	#Initialize
 index=0
 while True:
