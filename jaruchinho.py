@@ -45,7 +45,6 @@ p = ps3()  # Create a PS3 object
 print "Done"
 s = 80  # Initializ
 imgid = 0
-recording=False
 while True:
     set_speed(s)  # Update the speed
     p.update()  # Read the ps3 values
@@ -57,8 +56,6 @@ while True:
         right()
     elif p.down:  # If DOWN is pressed go back
         bwd()
-    elif p.cross:  # If CROSS is pressed stop
-        stop()
     elif p.circle:
         led_on(LED_L)
         led_on(LED_R)
@@ -66,13 +63,10 @@ while True:
         camera.capture('image' + str(imgid) + '.jpg')
         imgid += 1
     elif p.triangle:
-		if recording:
-			camera.stop_recording()
-			recording = False
-		else:
-			camera.start_recording('video.h264')
-			recording = True
-        # print "Distance: " + us_dist(15)
+		camera.start_recording('video.h264')
+		# print "Distance: " + us_dist(15)
+	elif p.cross:
+		camera.stop_recording()
     else:
         stop()
         led_off(LED_L)
