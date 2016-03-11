@@ -41,7 +41,7 @@ camera = picamera.PiCamera()
 camera.vflip = True
 camera.hflip = True
 camera.led = False
-camera.brightness = 70
+camera.brightness = 60
 
 p = ps3()  # Create a PS3 object
 print "Done"
