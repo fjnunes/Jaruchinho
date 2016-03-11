@@ -46,41 +46,40 @@ print "Done"
 s = 80  # Initializ
 imgid = 0
 while True:
-    set_speed(s)  # Update the speed
-    p.update()  # Read the ps3 values
-    if p.up:  # If UP is pressed move forward
-        fwd()
-    elif p.left:  # If LEFT is pressed turn left
-        left()
-    elif p.right:  # If RIGHT is pressed move right
-        right()
-    elif p.down:  # If DOWN is pressed go back
-        bwd()
-    elif p.circle:
-        led_on(LED_L)
-        led_on(LED_R)
-    elif p.square:
-        camera.capture('image' + str(imgid) + '.jpg')
-        imgid += 1
-    elif p.triangle:
+	set_speed(s)  # Update the speed
+	p.update()  # Read the ps3 values
+	if p.up:  # If UP is pressed move forward
+		fwd()
+	elif p.left:  # If LEFT is pressed turn left
+		left()
+	elif p.right:  # If RIGHT is pressed move right
+		right()
+	elif p.down:  # If DOWN is pressed go back
+		bwd()
+	elif p.circle:
+		led_on(LED_L)
+		led_on(LED_R)
+	elif p.square:
+		camera.capture('image' + str(imgid) + '.jpg')
+		imgid += 1
+	elif p.triangle:
 		camera.start_recording('video.h264')
-		# print "Distance: " + us_dist(15)
 	elif p.cross:
 		camera.stop_recording()
-    else:
-        stop()
-        led_off(LED_L)
-        led_off(LED_R)
-    if p.l2:  # Increase the speed if L2 is pressed
-        print s
-        s += 10
-        if s > 255:
-            s = 255
-    if p.r2:  # Decrease the speed if R2 is pressed
-        print s
-        s -= 10
-        if s < 0:
-            s = 0
-    x = (p.a_joystick_left_x + 1) * 75+6
-    servo(int(x))  # Turn servo a/c to left joy movement
-    time.sleep(.01)
+	else:
+		stop()
+		led_off(LED_L)
+		led_off(LED_R)
+	if p.l2:  # Increase the speed if L2 is pressed
+		print s
+		s += 10
+		if s > 255:
+			s = 255
+	if p.r2:  # Decrease the speed if R2 is pressed
+		print s
+		s -= 10
+		if s < 0:
+			s = 0
+	x = (p.a_joystick_left_x + 1) * 75+6
+	servo(int(x))  # Turn servo a/c to left joy movement
+	time.sleep(.01)
