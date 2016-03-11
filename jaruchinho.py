@@ -39,31 +39,20 @@ print "Initializing"
 p=ps3()		#Create a PS3 object
 print "Done"
 s=80	#Initialize
-run=1
 while True:
-	if run:
-		set_speed(s)	#Update the speed
+	set_speed(s)	#Update the speed
 	p.update()			#Read the ps3 values
 	if p.up:			#If UP is pressed move forward
-		if run:
-			fwd()
-		print "f"
+		fwd()
 	elif p.left:		#If LEFT is pressed turn left
-		if run:
-			left()
-		print "l"
+		left()
 	elif p.right:		#If RIGHT is pressed move right
-		if run:
-			right()
+		right()
 		print "r"
 	elif p.down:		#If DOWN is pressed go back
-		if run:
-			bwd()
-		print "b"
+		bwd()
 	elif p.cross:		#If CROSS is pressed stop
-		if run:
-			stop()
-		print "s"
+		stop()
 	else:
 		stop()
 	if p.l2:			#Increase the speed if L2 is pressed
