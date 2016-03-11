@@ -40,6 +40,8 @@ print "Initializing"
 camera = picamera.PiCamera()
 camera.vflip = True
 camera.hflip = True
+camera.led = False
+camera.brightness = 70
 
 p = ps3()  # Create a PS3 object
 print "Done"
