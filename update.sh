@@ -4,4 +4,4 @@ sudo pkill -f jaruchinho.py
 
 git pull
 
-sudo nohup python jaruchinho.py & disown
+sudo python jaruchinho.py &> /dev/null & disown
