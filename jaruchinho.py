@@ -48,7 +48,6 @@ while True:
 		left()
 	elif p.right:		#If RIGHT is pressed move right
 		right()
-		print "r"
 	elif p.down:		#If DOWN is pressed go back
 		bwd()
 	elif p.cross:		#If CROSS is pressed stop
