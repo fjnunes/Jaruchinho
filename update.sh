@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+pkill -f jaruchinho.py
+
 git pull
 
-#sudo python jaruchinho.py
+sudo nohup python jaruchinho.py &
+
+disown
