@@ -45,6 +45,7 @@ p = ps3()  # Create a PS3 object
 print "Done"
 s = 80  # Initializ
 imgid = 0
+recording = False
 while True:
 	set_speed(s)  # Update the speed
 	p.update()  # Read the ps3 values
@@ -64,8 +65,10 @@ while True:
 		imgid += 1
 	elif p.triangle:
 		camera.start_recording('video.h264')
+		recording = True
 	elif p.cross:
 		camera.stop_recording()
+		recording = False
 	else:
 		stop()
 		led_off(LED_L)
