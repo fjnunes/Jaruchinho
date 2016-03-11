@@ -39,6 +39,7 @@ import picamera
 print "Initializing"
 camera = picamera.PiCamera()
 camera.vflip = True
+camera.hflip = True
 
 p = ps3()  # Create a PS3 object
 print "Done"
