@@ -32,52 +32,54 @@ along with this program.  If not, see <http://www.gnu.org/licenses/gpl-3.0.txt>.
 # l2 to increase speed
 # r2 to decrease speed
 ########################################################################
-from ps3 import *		#Import the PS3 library
-from gopigo import *	#Import the GoPiGo library
+from ps3 import *  # Import the PS3 library
+from gopigo import *  # Import the GoPiGo library
 import picamera
 
 print "Initializing"
 camera = picamera.PiCamera()
 camera.vflip = True
 
-p=ps3()		#Create a PS3 object
+p = ps3()  # Create a PS3 object
 print "Done"
-s=80	#Initializ
+s = 80  # Initializ
 imgid = 0
 while True:
-	set_speed(s)	#Update the speed
-	p.update()			#Read the ps3 values
-	if p.up:			#If UP is pressed move forward
-		fwd()
-	elif p.left:		#If LEFT is pressed turn left
-		left()
-	elif p.right:		#If RIGHT is pressed move right
-		right()
-	elif p.down:		#If DOWN is pressed go back
-		bwd()
-	elif p.cross:		#If CROSS is pressed stop
-		stop()
-	elif p.circle:
-		led_on(LED_L)
-		led_on(LED_R)
-	elif p.square:
-		camera.capture('image'+str(imgid)+'.jpg')
-		imgid += 1
-	else:
-		stop()
-		led_off(LED_L)
-		led_off(LED_R)
-	if p.l2:			#Increase the speed if L2 is pressed
-		print s
-		s+=10
-		if s>255:
-			s=255
-	if p.r2:			#Decrease the speed if R2 is pressed
-		print s
-		s-=10
-		if s<0:
-			s=0
-	x=(p.a_joystick_left_x+1)*90
-	print int(x)
-	servo(int(x))	#Turn servo a/c to left joy movement
-	time.sleep(.01)
+    set_speed(s)  # Update the speed
+    p.update()  # Read the ps3 values
+    if p.up:  # If UP is pressed move forward
+        fwd()
+    elif p.left:  # If LEFT is pressed turn left
+        left()
+    elif p.right:  # If RIGHT is pressed move right
+        right()
+    elif p.down:  # If DOWN is pressed go back
+        bwd()
+    elif p.cross:  # If CROSS is pressed stop
+        stop()
+    elif p.circle:
+        led_on(LED_L)
+        led_on(LED_R)
+    elif p.square:
+        camera.capture('image' + str(imgid) + '.jpg')
+        imgid += 1
+    elif p.triangle:
+        print "Distance: " + us_dist(15)
+    else:
+        stop()
+        led_off(LED_L)
+        led_off(LED_R)
+    if p.l2:  # Increase the speed if L2 is pressed
+        print s
+        s += 10
+        if s > 255:
+            s = 255
+    if p.r2:  # Decrease the speed if R2 is pressed
+        print s
+        s -= 10
+        if s < 0:
+            s = 0
+    x = (p.a_joystick_left_x + 1) * 90
+    print int(x)
+    servo(int(x))  # Turn servo a/c to left joy movement
+    time.sleep(.01)
