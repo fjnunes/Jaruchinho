@@ -51,7 +51,8 @@ imgid = 0
 recording = False
 
 enable_encoders()
-enc_tgt(1,1,0)
+enc_tgt(1,1,1)
+fwd()
 
 while True:
 	if read_enc_status() != 0:
