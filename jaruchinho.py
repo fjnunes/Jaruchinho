@@ -47,6 +47,7 @@ camera.resolution = (640, 480)
 p = ps3()  # Create a PS3 object
 print "Done"
 s = 80  # Initializ
+pulses = 4
 imgid = 0
 recording = False
 
@@ -56,7 +57,6 @@ fwd()
 
 while True:
 	if read_enc_status() != 0:
-		print "Pera q nao acabou"
 		time.sleep(.01)
 		continue
 	stoped = False
@@ -64,15 +64,15 @@ while True:
 	p.update()  # Read the ps3 values
 	if p.up:  # If UP is pressed move forward
 		camera.capture('forward/image' + str(imgid) + '.jpg')
-		enc_tgt(1,1,9)
+		enc_tgt(1,1,pulses)
 		fwd()
 	elif p.left:  # If LEFT is pressed turn left
 		camera.capture('left/image' + str(imgid) + '.jpg')
-		enc_tgt(0,1,9)
+		enc_tgt(0,1,pulses)
 		left()
 	elif p.right:  # If RIGHT is pressed move right
 		camera.capture('right/image' + str(imgid) + '.jpg')
-		enc_tgt(1,0,9)
+		enc_tgt(1,0,pulses)
 		right()
 	elif p.down:  # If DOWN is pressed go back
 		bwd()
