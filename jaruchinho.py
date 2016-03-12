@@ -56,12 +56,12 @@ enc_tgt(1,1,1)
 fwd()
 
 while True:
+	p.update()  # Read the ps3 values
 	if read_enc_status() != 0:
 		time.sleep(1)
 		continue
 	stoped = False
 	set_speed(s)  # Update the speed
-	p.update()  # Read the ps3 values
 	if p.up:  # If UP is pressed move forward
 		# camera.capture('images/forward/image' + str(imgid) + '.jpg')
 		enc_tgt(1,1,pulses)
