@@ -56,6 +56,7 @@ fwd()
 
 while True:
 	if read_enc_status() == 0:
+		print "Pera q nao acabou"
 		continue
 	stoped = False
 	set_speed(s)  # Update the speed
