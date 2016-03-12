@@ -68,11 +68,11 @@ while True:
 		fwd()
 	elif p.left:  # If LEFT is pressed turn left
 		camera.capture('left/image' + str(imgid) + '.jpg')
-		enc_tgt(1,1,9)
+		enc_tgt(0,1,9)
 		left()
 	elif p.right:  # If RIGHT is pressed move right
 		camera.capture('right/image' + str(imgid) + '.jpg')
-		enc_tgt(1,1,9)
+		enc_tgt(1,0,9)
 		right()
 	elif p.down:  # If DOWN is pressed go back
 		bwd()
