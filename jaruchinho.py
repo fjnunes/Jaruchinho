@@ -69,7 +69,6 @@ while True:
 		led_on(LED_R)
 	elif p.square:
 		camera.capture('image' + str(imgid) + '.jpg')
-		imgid += 1
 	elif p.triangle:
 		if not recording:
 			camera.start_recording('video.h264')
@@ -83,6 +82,10 @@ while True:
 		led_off(LED_L)
 		led_off(LED_R)
 		stoped = True
+
+	if not stoped:
+		imgid += 1
+
 	if p.l2:  # Increase the speed if L2 is pressed
 		print s
 		s += 10
