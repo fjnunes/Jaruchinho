@@ -110,4 +110,4 @@ while True:
 			s = 0
 	x = (p.a_joystick_left_x + 1) * 75+6
 	servo(int(x))  # Turn servo a/c to left joy movement
-	time.sleep(.3)
+	time.sleep(3)
