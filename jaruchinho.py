@@ -63,15 +63,15 @@ while True:
 	set_speed(s)  # Update the speed
 	p.update()  # Read the ps3 values
 	if p.up:  # If UP is pressed move forward
-		camera.capture('forward/image' + str(imgid) + '.jpg')
+		camera.capture('images/forward/image' + str(imgid) + '.jpg')
 		enc_tgt(1,1,pulses)
 		fwd()
 	elif p.left:  # If LEFT is pressed turn left
-		camera.capture('left/image' + str(imgid) + '.jpg')
+		camera.capture('images/left/image' + str(imgid) + '.jpg')
 		enc_tgt(0,1,pulses)
 		left()
 	elif p.right:  # If RIGHT is pressed move right
-		camera.capture('right/image' + str(imgid) + '.jpg')
+		camera.capture('images/right/image' + str(imgid) + '.jpg')
 		enc_tgt(1,0,pulses)
 		right()
 	elif p.down:  # If DOWN is pressed go back
