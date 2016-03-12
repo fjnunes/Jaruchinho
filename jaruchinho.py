@@ -56,7 +56,7 @@ while True:
 	stoped = False
 	set_speed(s)  # Update the speed
 	p.update()  # Read the ps3 values
-	enc_tgt(1,1,4)
+	enc_tgt(1,1,9)
 	if p.up:  # If UP is pressed move forward
 		camera.capture('forward/image' + str(imgid) + '.jpg')
 		fwd()
