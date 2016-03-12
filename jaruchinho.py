@@ -49,13 +49,17 @@ s = 80  # Initializ
 imgid = 0
 recording = False
 while True:
+	stoped = False
 	set_speed(s)  # Update the speed
 	p.update()  # Read the ps3 values
 	if p.up:  # If UP is pressed move forward
+		camera.capture('forward/image' + str(imgid) + '.jpg')
 		fwd()
 	elif p.left:  # If LEFT is pressed turn left
+		camera.capture('left/image' + str(imgid) + '.jpg')
 		left()
 	elif p.right:  # If RIGHT is pressed move right
+		camera.capture('right/image' + str(imgid) + '.jpg')
 		right()
 	elif p.down:  # If DOWN is pressed go back
 		bwd()
@@ -77,6 +81,7 @@ while True:
 		stop()
 		led_off(LED_L)
 		led_off(LED_R)
+		stoped = True
 	if p.l2:  # Increase the speed if L2 is pressed
 		print s
 		s += 10
@@ -89,4 +94,4 @@ while True:
 			s = 0
 	x = (p.a_joystick_left_x + 1) * 75+6
 	servo(int(x))  # Turn servo a/c to left joy movement
-	time.sleep(.01)
+	time.sleep(.3)
