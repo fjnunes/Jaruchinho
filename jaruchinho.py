@@ -51,9 +51,10 @@ imgid = 0
 recording = False
 
 enable_encoders()
+enc_tgt(1,1,0)
 
 while True:
-	if read_enc_status():
+	if read_enc_status() != 0:
 		continue
 	stoped = False
 	set_speed(s)  # Update the speed
