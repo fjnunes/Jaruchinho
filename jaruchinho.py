@@ -55,7 +55,7 @@ enc_tgt(1,1,1)
 fwd()
 
 while True:
-	if read_enc_status() == 0:
+	if read_enc_status() != 0:
 		print "Pera q nao acabou"
 		continue
 	stoped = False
