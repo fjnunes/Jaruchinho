@@ -49,6 +49,9 @@ print "Done"
 s = 80  # Initializ
 imgid = 0
 recording = False
+
+enable_encoders()
+
 while True:
 	stoped = False
 	set_speed(s)  # Update the speed
