@@ -90,7 +90,7 @@ while True:
 			camera.stop_recording()
 			recording = False
 	else:
-		stop()
+		# stop()
 		led_off(LED_L)
 		led_off(LED_R)
 		stoped = True
