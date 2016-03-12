@@ -57,7 +57,7 @@ fwd()
 
 while True:
 	if read_enc_status() != 0:
-		time.sleep(.01)
+		time.sleep(1)
 		continue
 	stoped = False
 	set_speed(s)  # Update the speed
