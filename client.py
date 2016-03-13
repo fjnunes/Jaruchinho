@@ -13,8 +13,8 @@ try:
     with picamera.PiCamera() as camera:
         camera.vflip = True
         camera.hflip = True
-        camera.resolution = (640, 480)
-        camera.framerate = 10
+        camera.resolution = (320, 240)
+        camera.framerate = 24
         # Start a preview and let the camera warm up for 2 seconds
         # camera.start_preview()
         # time.sleep(2)
