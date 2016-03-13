@@ -3,8 +3,8 @@ import subprocess
 import cv2
 import numpy as np
 
+connected = False
 jaruchinho_socket = socket.socket()
-jaruchinho_socket.connect(('dex.local', 8008))
 
 camera_socket = socket.socket()
 camera_socket.bind(('0.0.0.0', 8000))
@@ -23,6 +23,12 @@ try:
             bytes= bytes[b+2:]
             i = cv2.imdecode(np.fromstring(jpg, dtype=np.uint8),cv2.CV_LOAD_IMAGE_COLOR)
             cv2.imshow('i',i)
+
+            if not connected:
+                jaruchinho_socket.connect(('dex.local', 8008))
+                # jaruchinho_connection = jaruchinho_socket.makefile('wb')
+
+                connected = True
 
             jaruchinho_socket.send("r")
 
