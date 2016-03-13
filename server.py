@@ -2,6 +2,16 @@ import socket
 import subprocess
 import cv2
 import numpy as np
+import tensorflow as tf
+import os.path
+
+def create_graph():
+  """Creates a graph from saved GraphDef file and returns a saver."""
+  # Creates graph from saved graph_def.pb.
+  with tf.gfile.FastGFile(os.path.join("./", 'output_graph.pb'), 'rb') as f:
+    graph_def = tf.GraphDef()
+    graph_def.ParseFromString(f.read())
+    _ = tf.import_graph_def(graph_def, name='')
 
 connected = False
 jaruchinho_socket = socket.socket()
@@ -24,16 +34,15 @@ try:
         if a!=-1 and b!=-1:
             jpg = bytes[a:b+2]
             bytes= bytes[b+2:]
-            i = cv2.imdecode(np.fromstring(jpg, dtype=np.uint8),cv2.CV_LOAD_IMAGE_COLOR)
-            cv2.imshow('i',i)
+            image = cv2.imdecode(np.fromstring(jpg, dtype=np.uint8),cv2.CV_LOAD_IMAGE_COLOR)
+            cv2.imshow('image',image)
 
             if not connected:
                 jaruchinho_socket.connect(('dex.local', 8008))
-                # jaruchinho_connection = jaruchinho_socket.makefile('wb')
 
                 connected = True
-
-            if i%10:
+            i += 1
+            if i == 10:
                 i = 0
                 if f == 'r':
                     f = 'l'
