@@ -58,7 +58,7 @@ fwd()
 while True:
 	p.update()  # Read the ps3 values
 	if read_enc_status() != 0:
-		time.sleep(1)
+		time.sleep(0.01)
 		continue
 	stoped = False
 	set_speed(s)  # Update the speed
