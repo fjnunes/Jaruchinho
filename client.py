@@ -15,6 +15,7 @@ try:
         camera.hflip = True
         camera.resolution = (320, 240)
         camera.framerate = 24
+        camera.annotate_text = 'Hello world!'
         # Start a preview and let the camera warm up for 2 seconds
         # camera.start_preview()
         # time.sleep(2)

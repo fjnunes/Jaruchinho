@@ -19,8 +19,8 @@ try:
         # Repeatedly read 1k of data from the connection and write it to
         # the media player's stdin
         data = connection.read(1024)
-        if not data:
-            break
+        # if not data:
+        #     break
         player.stdin.write(data)
 finally:
     connection.close()
