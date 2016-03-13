@@ -16,6 +16,8 @@ camera_socket.connect(('FernandoMacBookPro.local', 8000))
 # Make a file-like object out of the connection
 camera_connection = camera_socket.makefile('wb')
 
+set_speed(60)
+
 try:
     with picamera.PiCamera() as camera:
         camera.vflip = True

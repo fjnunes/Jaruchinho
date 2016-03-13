@@ -12,6 +12,9 @@ camera_socket.listen(0)
 
 # Accept a single connection and make a file-like object out of it
 camera_connection = camera_socket.accept()[0].makefile('rb')
+
+i = 0
+f = 'r'
 try:
     bytes=''
     while True:
@@ -30,7 +33,13 @@ try:
 
                 connected = True
 
-            jaruchinho_socket.send("r")
+            if i%10:
+                i = 0
+                if f == 'r':
+                    f = 'l'
+                elif f == 'l':
+                    f = 'r'
+            jaruchinho_socket.send(f)
 
             if cv2.waitKey(1) == 27:
                 exit(0)
