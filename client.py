@@ -6,7 +6,7 @@ from ps3 import *  # Import the PS3 library
 from gopigo import *  # Import the GoPiGo library
 
 jaruchinho_socket = socket.socket()
-jaruchinho_socket.bind(('0.0.0.0', 8001))
+jaruchinho_socket.bind(('0.0.0.0', 8008))
 jaruchinho_socket.listen(0)
 
 camera_socket = socket.socket()

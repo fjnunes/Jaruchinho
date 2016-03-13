@@ -4,7 +4,7 @@ import cv2
 import numpy as np
 
 jaruchinho_socket = socket.socket()
-jaruchinho_socket.connect(('dex.local', 8001))
+jaruchinho_socket.connect(('dex.local', 8008))
 
 camera_socket = socket.socket()
 camera_socket.bind(('0.0.0.0', 8000))
