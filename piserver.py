@@ -6,7 +6,7 @@ with picamera.PiCamera() as camera:
     camera.vflip = True
     camera.hflip = True
     camera.resolution = (320, 240)
-    camera.framerate = 1
+    camera.framerate = 3
 
     server_socket = socket.socket()
     server_socket.bind(('0.0.0.0', 8000))
