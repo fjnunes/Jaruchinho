@@ -40,7 +40,7 @@ print "Initializing"
 camera = picamera.PiCamera()
 camera.vflip = True
 camera.hflip = True
-camera.led = False
+# camera.led = False
 camera.brightness = 60
 camera.resolution = (640, 480)
 
