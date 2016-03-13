@@ -1,5 +1,7 @@
 import socket
 import subprocess
+import cv2
+import numpy as np
 
 # Start a socket listening for connections on 0.0.0.0:8000 (0.0.0.0 means
 # all interfaces)
@@ -10,19 +12,18 @@ server_socket.listen(0)
 # Accept a single connection and make a file-like object out of it
 connection = server_socket.accept()[0].makefile('rb')
 try:
-    # Run a viewer with an appropriate command line. Uncomment the mplayer
-    # version if you would prefer to use mplayer instead of VLC
-    cmdline = ['/Applications/VLC.app/Contents/MacOS/VLC', '--demux', 'h264', '-']
-    #cmdline = ['mplayer', '-fps', '25', '-cache', '1024', '-']
-    player = subprocess.Popen(cmdline, stdin=subprocess.PIPE)
+    bytes=''
     while True:
-        # Repeatedly read 1k of data from the connection and write it to
-        # the media player's stdin
-        data = connection.read(1024)
-        # if not data:
-        #     break
-        player.stdin.write(data)
+        bytes+=connection.read(1024)
+        a = bytes.find('\xff\xd8')
+        b = bytes.find('\xff\xd9')
+        if a!=-1 and b!=-1:
+            jpg = bytes[a:b+2]
+            bytes= bytes[b+2:]
+            i = cv2.imdecode(np.fromstring(jpg, dtype=np.uint8),cv2.CV_LOAD_IMAGE_COLOR)
+            cv2.imshow('i',i)
+            if cv2.waitKey(1) == 27:
+                exit(0)
 finally:
     connection.close()
     server_socket.close()
-    player.terminate()
