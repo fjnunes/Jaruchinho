@@ -6,7 +6,7 @@ with picamera.PiCamera() as camera:
     camera.vflip = True
     camera.hflip = True
     camera.resolution = (320, 240)
-    camera.framerate = 10
+    camera.framerate = 1
 
     server_socket = socket.socket()
     server_socket.bind(('0.0.0.0', 8000))
@@ -16,7 +16,7 @@ with picamera.PiCamera() as camera:
     connection = server_socket.accept()[0].makefile('wb')
     try:
         camera.start_recording(connection, format='mjpeg')
-        input("Recording..,")
+        input("Recording...")
         # camera.wait_recording(60)
         # camera.stop_recording()
     finally:
