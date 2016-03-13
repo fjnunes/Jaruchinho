@@ -18,6 +18,7 @@ try:
         camera.framerate = 24
         camera.annotate_background = picamera.Color('black')
         camera.annotate_text = dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        camera.start_recording(connection, format='h264')
         start = dt.datetime.now()
         while (dt.datetime.now() - start).seconds < 30:
             camera.annotate_text = dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
@@ -27,7 +28,6 @@ try:
         # time.sleep(2)
         # Start recording, sending the output to the connection for 60
         # seconds, then stop
-        camera.start_recording(connection, format='h264')
         # camera.wait_recording(60)
         # camera.stop_recording()
         input("Recording...")
