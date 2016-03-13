@@ -17,7 +17,7 @@ try:
         camera.resolution = (320, 240)
         camera.framerate = 10
         # camera.annotate_text = "Teste"
-        camera.start_recording(connection, format='h264')
+        camera.start_recording(connection, format='mjpeg')
 
         input("Recording...")
 finally:
