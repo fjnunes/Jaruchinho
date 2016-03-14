@@ -33,6 +33,7 @@ try:
 
         while True:
             command=jaruchinho_connection.read(1)
+            print(command)
             if command == 'f':
                 fwd()
             elif command == 'r':
