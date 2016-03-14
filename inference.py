@@ -54,8 +54,7 @@ class inference:
 
         return result
 
-inf = inference()
-
+# inf = inference()
 # dir_path = "/Users/jaruche/Desktop/JImages/images/forward/"
 # for file in os.listdir(dir_path):
 #     image_data = gfile.FastGFile(dir_path+file, 'r').read()

@@ -24,7 +24,7 @@ camera_socket.listen(0)
 # Accept a single connection and make a file-like object out of it
 camera_connection = camera_socket.accept()[0].makefile('rb')
 
-inference = inference()
+inf = inference.inference()
 
 i = 0
 f = 'r'
@@ -44,7 +44,7 @@ try:
                 jaruchinho_socket.connect(('dex.local', 8008))
                 connected = True
 
-            direction = inference.direction(image)
+            direction = inf.direction(image)
 
             jaruchinho_socket.send(direction)
 
