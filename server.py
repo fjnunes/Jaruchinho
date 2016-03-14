@@ -45,6 +45,7 @@ try:
                 connected = True
 
             direction = inf.direction(image)
+            print(direction)
 
             jaruchinho_socket.send(direction)
 

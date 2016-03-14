@@ -33,12 +33,12 @@ try:
 
         while True:
             command=jaruchinho_connection.read(1)
-            if command == 'f':
+            if command == 0:
                 fwd()
-            elif command == 'l':
-                left()
-            elif command == 'r':
+            elif command == 1:
                 right()
+            elif command == 2:
+                left()
             else:
                 stop()
 
