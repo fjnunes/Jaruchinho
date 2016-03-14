@@ -23,7 +23,7 @@ try:
         camera.vflip = True
         camera.hflip = True
         camera.resolution = (640, 480)
-        camera.framerate = 10
+        camera.framerate = 2
         # camera.annotate_text = "Teste"
         camera.start_recording(camera_connection, format='mjpeg')
 
@@ -33,12 +33,11 @@ try:
 
         while True:
             command=jaruchinho_connection.read(1)
-            print(command)
-            if command == 0:
+            if command == 'f':
                 fwd()
-            elif command == 1:
+            elif command == 'r':
                 right()
-            elif command == 2:
+            elif command == 'l':
                 left()
             else:
                 stop()

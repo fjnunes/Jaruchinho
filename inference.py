@@ -52,7 +52,15 @@ class inference:
         result = self.sess.run(ensure_name_has_port(final_tensor_name),
             { ensure_name_has_port(image_data_tensor_name): image_data })
 
-        return np.argmax(result)
+        argmax = np.argmax(result)
+        if argmax == 0:
+            return 'f'
+        elif argmax == 1:
+            return 'r'
+        elif argmax == 2:
+            return 'l'
+        else:
+            return 's'
 
 # inf = inference()
 # dir_path = "/Users/jaruche/Desktop/JImages/images/forward/"
