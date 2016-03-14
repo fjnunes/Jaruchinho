@@ -4,6 +4,7 @@ import cv2
 import numpy as np
 import tensorflow as tf
 import os.path
+import inference
 
 def create_graph():
   """Creates a graph from saved GraphDef file and returns a saver."""
@@ -23,6 +24,8 @@ camera_socket.listen(0)
 # Accept a single connection and make a file-like object out of it
 camera_connection = camera_socket.accept()[0].makefile('rb')
 
+inference = inference()
+
 i = 0
 f = 'r'
 try:
@@ -39,16 +42,11 @@ try:
 
             if not connected:
                 jaruchinho_socket.connect(('dex.local', 8008))
-
                 connected = True
-            i += 1
-            if i == 10:
-                i = 0
-                if f == 'r':
-                    f = 'l'
-                elif f == 'l':
-                    f = 'r'
-            jaruchinho_socket.send(f)
+
+            direction = inference.direction(image)
+
+            jaruchinho_socket.send(direction)
 
             if cv2.waitKey(1) == 27:
                 exit(0)

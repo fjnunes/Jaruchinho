@@ -23,7 +23,7 @@ try:
         camera.vflip = True
         camera.hflip = True
         camera.resolution = (320, 240)
-        camera.framerate = 10
+        camera.framerate = 2
         # camera.annotate_text = "Teste"
         camera.start_recording(camera_connection, format='mjpeg')
 

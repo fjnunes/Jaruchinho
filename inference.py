@@ -1,7 +1,9 @@
 
 import numpy as np
 import tensorflow as tf
+import os
 import os.path
+import datetime as dt
 
 from tensorflow.python.platform import gfile
 
@@ -33,20 +35,30 @@ def create_graph():
             _ = tf.import_graph_def(graph_def, name='')
     return sess.graph
 
-graph = create_graph()
-sess = tf.Session()
+class inference:
 
-# Set up all our weights to their initial default values.
-init = tf.initialize_all_variables()
-sess.run(init)
+    def __init__(self):
+        graph = create_graph()
+        self.sess = tf.Session()
 
-result = ""
-while True:
-    image_path = raw_input('Image path: ')
-    image_data = gfile.FastGFile("/Users/jaruche/Desktop/JImages/images/"+str(image_path), 'r').read()
+        # Set up all our weights to their initial default values.
+        init = tf.initialize_all_variables()
+        self.sess.run(init)
 
-    result = sess.run(
-      ensure_name_has_port(final_tensor_name),
-      { ensure_name_has_port(image_data_tensor_name): image_data })
+    def direction(self, image_data):
+        # image_path = raw_input('Image path: ')
+        # image_data = gfile.FastGFile("/Users/jaruche/Desktop/JImages/images/forward/image1.jpg", 'r').read()
 
-    i = 0
+        result = self.sess.run(ensure_name_has_port(final_tensor_name),
+            { ensure_name_has_port(image_data_tensor_name): image_data })
+
+        return result
+
+inf = inference()
+
+# dir_path = "/Users/jaruche/Desktop/JImages/images/forward/"
+# for file in os.listdir(dir_path):
+#     image_data = gfile.FastGFile(dir_path+file, 'r').read()
+#     start = dt.datetime.now()
+#     result = inf.direction(image_data)
+#     print(result, (dt.datetime.now()-start).microseconds/1000, file)
