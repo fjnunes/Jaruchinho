@@ -46,9 +46,6 @@ class inference:
         self.sess.run(init)
 
     def direction(self, image_data):
-        # image_path = raw_input('Image path: ')
-        image_data = gfile.FastGFile("/Users/jaruche/Desktop/JImages/images/forward/image1.jpg", 'r').read()
-
         result = self.sess.run(ensure_name_has_port(final_tensor_name),
             { ensure_name_has_port(image_data_tensor_name): image_data })
 

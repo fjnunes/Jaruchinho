@@ -1,10 +1,11 @@
 import socket
-import subprocess
 import cv2
 import numpy as np
 import tensorflow as tf
 import os.path
 import inference
+
+from tensorflow.python.platform import gfile
 
 def create_graph():
   """Creates a graph from saved GraphDef file and returns a saver."""
@@ -38,13 +39,15 @@ try:
             jpg = bytes[a:b+2]
             bytes= bytes[b+2:]
             image = cv2.imdecode(np.fromstring(jpg, dtype=np.uint8),cv2.CV_LOAD_IMAGE_COLOR)
+            cv2.imwrite("/tmp/img.jpg", image);
             cv2.imshow('image',image)
 
             if not connected:
                 jaruchinho_socket.connect(('dex.local', 8008))
                 connected = True
 
-            direction = inf.direction(image)
+            image_data = gfile.FastGFile("/tmp/img.jpg", 'r').read()
+            direction = inf.direction(image_data)
             print(direction)
 
             jaruchinho_socket.send(direction)

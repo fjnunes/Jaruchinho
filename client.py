@@ -16,7 +16,7 @@ camera_socket.connect(('FernandoMacBookPro.local', 8000))
 # Make a file-like object out of the connection
 camera_connection = camera_socket.makefile('wb')
 
-set_speed(30)
+set_speed(20)
 
 try:
     with picamera.PiCamera() as camera:
@@ -42,7 +42,7 @@ try:
                 left()
             else:
                 stop()
-                time.sleep(0.1)
+                time.sleep(0.4)
 
 finally:
     camera_connection.close()
