@@ -22,7 +22,7 @@ try:
     with picamera.PiCamera() as camera:
         camera.vflip = True
         camera.hflip = True
-        camera.resolution = (640, 480)
+        camera.resolution = (320, 240)
         camera.framerate = 2
         # camera.annotate_text = "Teste"
         camera.start_recording(camera_connection, format='mjpeg')
