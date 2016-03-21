@@ -16,14 +16,14 @@ camera_socket.connect(('FernandoMacBookPro.local', 8000))
 # Make a file-like object out of the connection
 camera_connection = camera_socket.makefile('wb')
 
-set_speed(40)
+set_speed(50)
 
 try:
     with picamera.PiCamera() as camera:
         camera.vflip = True
         camera.hflip = True
         camera.resolution = (640, 480)
-        camera.framerate = 10
+        camera.framerate = 4
         # camera.annotate_text = "Teste"
         camera.start_recording(camera_connection, format='mjpeg')
 

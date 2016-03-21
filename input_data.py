@@ -96,7 +96,7 @@ def extract_image(filename):
   jpgfile = Image.open(filename)
   jpgfile=jpgfile.convert('L') #makes it greyscale
   data = numpy.array(jpgfile)
-  data = data.reshape(120, 160, 1)
+  data = data.reshape(1, 19200)
 
   return data
 
