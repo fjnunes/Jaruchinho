@@ -5,9 +5,12 @@ import os
 import os.path
 import datetime as dt
 
+import input_data
+
 from tensorflow.python.platform import gfile
 
-image_data_tensor_name = 'DecodeJpeg/contents'
+# image_data_tensor_name = 'DecodeJpeg/contents'
+image_data_tensor_name = 'input_images'
 final_tensor_name = 'final_result'
 
 def ensure_name_has_port(tensor_name):
@@ -29,7 +32,7 @@ def create_graph():
     """Creates a graph from saved GraphDef file and returns a saver."""
     # Creates graph from saved graph_def.pb.
     with tf.Session() as sess:
-        with tf.gfile.FastGFile(os.path.join("/tmp/", 'output_graph.pb'), 'rb') as f:
+        with tf.gfile.FastGFile(os.path.join("", 'output_graph.pb'), 'rb') as f:
             graph_def = tf.GraphDef()
             graph_def.ParseFromString(f.read())
             _ = tf.import_graph_def(graph_def, name='')
@@ -54,16 +57,18 @@ class inference:
         if argmax == 0:
             return 'f'
         elif argmax == 1:
-            return 'r'
-        elif argmax == 2:
             return 'l'
+        elif argmax == 2:
+            return 'r'
         else:
             return 's'
 
-# inf = inference()
-# dir_path = "/Users/jaruche/Desktop/JImages/images/forward/"
-# for file in os.listdir(dir_path):
-#     image_data = gfile.FastGFile(dir_path+file, 'r').read()
-#     start = dt.datetime.now()
-#     result = inf.direction(image_data)
-#     print(result, (dt.datetime.now()-start).microseconds/1000, file)
+inf = inference()
+dir_path = "/Users/jaruche/Desktop/images/forward/"
+for file in os.listdir(dir_path):
+    # image_data = gfile.FastGFile(dir_path+file, 'r').read()
+    image_data = input_data.extract_image(dir_path+file)
+    image_data = image_data.reshape(1, 19200)
+    start = dt.datetime.now()
+    result = inf.direction(image_data)
+    print(result, (dt.datetime.now()-start).microseconds, file)

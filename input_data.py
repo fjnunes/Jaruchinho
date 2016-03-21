@@ -4,6 +4,9 @@ import hashlib
 import os.path
 import re
 import numpy
+from PIL import Image
+
+from tensorflow.python.platform import gfile
 
 class DataSet(object):
 
@@ -29,9 +32,9 @@ class DataSet(object):
 
       # Convert shape from [num examples, rows, columns, depth]
       # to [num examples, rows*columns] (assuming depth == 1)
-      assert images.shape[3] == 1
+      # assert images.shape[3] == 1
       images = images.reshape(images.shape[0],
-                              images.shape[1] * images.shape[2])
+                              images.shape[1] * images.shape[2] * images.shape[3])
       if dtype == tf.float32:
         # Convert from [0, 255] -> [0.0, 1.0].
         images = images.astype(numpy.float32)
@@ -84,6 +87,19 @@ class DataSet(object):
     end = self._index_in_epoch
     return self._images[start:end], self._labels[start:end]
 
+def _read32(bytestream):
+  dt = numpy.dtype(numpy.uint32).newbyteorder('>')
+  return numpy.frombuffer(bytestream.read(4), dtype=dt)[0]
+
+def extract_image(filename):
+  # image_data = gfile.FastGFile(filename, 'rb').read()
+  jpgfile = Image.open(filename)
+  jpgfile=jpgfile.convert('L') #makes it greyscale
+  data = numpy.array(jpgfile)
+  data = data.reshape(120, 160, 1)
+
+  return data
+
 def create_image_lists(image_dir, testing_percentage, validation_percentage):
   """Builds a list of training images from the file system.
 
@@ -105,6 +121,14 @@ def create_image_lists(image_dir, testing_percentage, validation_percentage):
     return None
   result = {}
   sub_dirs = [x[0] for x in os.walk(image_dir)]
+  training_images = []
+  training_labels = []
+  testing_images = []
+  testing_labels = []
+  validation_images = []
+  validation_labels = []
+
+  dir_index = 0
   for sub_dir in sub_dirs:
     extensions = ['jpg', 'jpeg', 'JPG', 'JPEG']
     file_list = []
@@ -117,9 +141,6 @@ def create_image_lists(image_dir, testing_percentage, validation_percentage):
       print('No files found')
       continue
     label_name = re.sub(r'[^a-z0-9]+', ' ', dir_name.lower())
-    training_images = []
-    testing_images = []
-    validation_images = []
     for file_name in file_list:
       base_name = os.path.basename(file_name)
       # We want to ignore anything after '_nohash_' in the file name when
@@ -138,15 +159,28 @@ def create_image_lists(image_dir, testing_percentage, validation_percentage):
       percentage_hash = (int(
           hashlib.sha1(hash_name).hexdigest(), 16) % (65536)) * (100 / 65535.0)
       if percentage_hash < validation_percentage:
-        validation_images.append(base_name)
+        validation_images.append(extract_image(sub_dir+'/'+base_name))
+        validation_labels.append(dir_index)
       elif percentage_hash < (testing_percentage + validation_percentage):
-        testing_images.append(base_name)
+        testing_images.append(extract_image(sub_dir+'/'+base_name))
+        testing_labels.append(dir_index)
       else:
-        training_images.append(base_name)
-    result[label_name] = {
-        'dir': dir_name,
-        'training': training_images,
-        'testing': testing_images,
-        'validation': validation_images,
-    }
-  return result
+        training_images.append(extract_image(sub_dir+'/'+base_name))
+        training_labels.append(dir_index)
+    dir_index += 1
+    # result[label_name] = {
+    #     'dir': dir_name,
+    #     'training': training_images,
+    #     'testing': testing_images,
+    #     'validation': validation_images,
+    # }
+  # return result
+  class DataSets(object):
+    pass
+  data_sets = DataSets()
+  dtype=tf.float32
+  data_sets.train = DataSet(numpy.array(training_images), numpy.array(training_labels), dtype=dtype)
+  data_sets.validation = DataSet(numpy.array(validation_images), numpy.array(validation_labels), dtype=dtype)
+  data_sets.test = DataSet(numpy.array(testing_images), numpy.array(testing_labels), dtype=dtype)
+
+  return data_sets

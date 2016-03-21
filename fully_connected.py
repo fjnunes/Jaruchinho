@@ -2,11 +2,9 @@ import math
 import tensorflow as tf
 
 # The MNIST dataset has 10 classes, representing the digits 0 through 9.
-NUM_CLASSES = 10
+NUM_CLASSES = 3
 
-# The MNIST images are always 28x28 pixels.
-IMAGE_SIZE = 28
-IMAGE_PIXELS = IMAGE_SIZE * IMAGE_SIZE
+IMAGE_PIXELS = 160 * 120
 
 
 def inference(images, hidden1_units, hidden2_units):
@@ -45,6 +43,7 @@ def inference(images, hidden1_units, hidden2_units):
     biases = tf.Variable(tf.zeros([NUM_CLASSES]),
                          name='biases')
     logits = tf.matmul(hidden2, weights) + biases
+
   return logits
 
 
