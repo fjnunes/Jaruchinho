@@ -47,6 +47,7 @@ try:
                 connected = True
 
             image_data = gfile.FastGFile("/tmp/img.jpg", 'r').read()
+            image_data = image_data.convert('L')
             direction = inf.direction(image_data)
             print(direction)
 
