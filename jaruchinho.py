@@ -42,7 +42,7 @@ camera = picamera.PiCamera()
 # camera.hflipp = True
 # camera.led = False
 camera.brightness = 60
-camera.resolution = (640, 480)
+# camera.resolution = (640, 480)
 
 p = ps3()  # Create a PS3 object
 print "Done"
