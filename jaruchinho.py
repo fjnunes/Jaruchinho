@@ -38,8 +38,8 @@ import picamera
 
 print "Initializing"
 camera = picamera.PiCamera()
-camera.vflip = True
-camera.hflip = True
+# camera.vflip = True
+# camera.hflipp = True
 # camera.led = False
 camera.brightness = 60
 camera.resolution = (640, 480)
