@@ -68,6 +68,7 @@ while True:
 
     # virtual bumper - prevents from moving fwd, left or right
     if distance <= 5 and not command == 'b':
+        print "Bump!"
         command = 's'
 
     print(command)
