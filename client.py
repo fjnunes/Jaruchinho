@@ -10,9 +10,6 @@ jaruchinho_socket = socket.socket()
 jaruchinho_socket.bind(('0.0.0.0', 8008))
 jaruchinho_socket.listen(0)
 
-# Make a file-like object out of the connection
-camera_connection = camera_socket.makefile('wb')
-
 set_speed(50)
 
 p = ps3()  # Create a PS3 object
@@ -61,6 +58,7 @@ try:
             if not connected:
                 camera_socket = socket.socket()
                 camera_socket.connect(('FernandoMacBookPro.local', 8000))
+                camera_connection = camera_socket.makefile('wb')
                 jaruchinho_connection = jaruchinho_socket.accept()[0].makefile('rb')
                 connected = True
             camera.start_recording(camera_connection, format='mjpeg')
