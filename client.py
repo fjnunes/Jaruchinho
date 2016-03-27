@@ -66,7 +66,7 @@ while True:
     elif connected:
         camera.stop_recording()
 
-    if distance <= 5:
+    if distance <= 5 and not command == 'b':
         command = 's'
 
     print(command)
