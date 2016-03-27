@@ -63,7 +63,7 @@ while True:
             connected = True
         camera.start_recording(camera_connection, format='mjpeg')
         command = jaruchinho_connection.read(1)
-    else:
+    elif connected:
         camera.stop_recording()
 
     if distance <= 5:
