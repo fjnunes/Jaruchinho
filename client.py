@@ -52,7 +52,7 @@ while True:
         led_off(LED_R)
 
     if p.triangle:
-        print "Distance: "+ distance
+        print "Distance: "+ str(distance)
 
     if p.l2:
         if not connected:
@@ -82,7 +82,6 @@ while True:
         stop()
     else:
         stop()
-        time.sleep(1)
 
 # finally:
 #     camera_connection.close()
