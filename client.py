@@ -66,6 +66,7 @@ while True:
     elif connected:
         camera.stop_recording()
 
+    # virtual bumper - prevents from moving fwd, left or right
     if distance <= 5 and not command == 'b':
         command = 's'
 
