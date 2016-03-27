@@ -10,9 +10,6 @@ jaruchinho_socket = socket.socket()
 jaruchinho_socket.bind(('0.0.0.0', 8008))
 jaruchinho_socket.listen(0)
 
-camera_socket = socket.socket()
-camera_socket.connect(('FernandoMacBookPro.local', 8000))
-
 # Make a file-like object out of the connection
 camera_connection = camera_socket.makefile('wb')
 
@@ -32,7 +29,6 @@ try:
     # camera.hflip = True
     camera.resolution = (640, 480)
     camera.framerate = 4
-    camera.start_recording(camera_connection, format='mjpeg')
 
     while True:
         command = ''
@@ -63,9 +59,14 @@ try:
 
         if p.l2:
             if not connected:
+                camera_socket = socket.socket()
+                camera_socket.connect(('FernandoMacBookPro.local', 8000))
                 jaruchinho_connection = jaruchinho_socket.accept()[0].makefile('rb')
                 connected = True
+            camera.start_recording(camera_connection, format='mjpeg')
             command = jaruchinho_connection.read(1)
+        else:
+            camera.stop_recording()
 
         if distance <= 5:
             command = 's'
