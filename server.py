@@ -33,7 +33,7 @@ f = 'r'
 try:
     bytes=''
     while True:
-        bytes+=camera_connection.read(1024)
+        bytes+=camera_connection.read(32)
         a = bytes.find('\xff\xd8')
         b = bytes.find('\xff\xd9')
         if a!=-1 and b!=-1:
