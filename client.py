@@ -8,9 +8,9 @@ from gopigo import *  # Import the GoPiGo library
 connected = False
 recording = False
 
-jaruchinho_socket = socket.socket()
-jaruchinho_socket.bind(('0.0.0.0', 8008))
-jaruchinho_socket.listen(0)
+# jaruchinho_socket = socket.socket()
+# jaruchinho_socket.bind(('0.0.0.0', 8008))
+# jaruchinho_socket.listen(0)
 
 set_speed(50)
 
@@ -67,7 +67,7 @@ while True:
             camera.start_recording(camera_connection, format='mjpeg')
             recording = True
         # command = jaruchinho_connection.read(1)
-    elif connected:
+    elif connected and recording:
         camera.stop_recording()
         recording = False
 
