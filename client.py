@@ -16,7 +16,7 @@ p = ps3()  # Create a PS3 object
 s = 80  # Initializ
 
 set_speed(50)
-enable_com_timeout(1000)
+# enable_com_timeout(1000)
 # Little step to indicate that the script has started
 enable_encoders()
 enc_tgt(1,1,1)
@@ -58,7 +58,7 @@ while True:
 
     if p.square:
         print "Capturing..."
-        camera.capture("image.jpg")
+        camera.capture("image.jpg", use_video_port=True)
 
     if p.r1:
         print "Volt: " + str(volt())
