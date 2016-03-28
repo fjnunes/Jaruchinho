@@ -58,7 +58,7 @@ while True:
 
     if p.square:
         print "Capturing..."
-        camera.capture("image.jpg", use_video_port=True)
+        camera.capture("image.jpg")
 
     if p.r1:
         print "Volt: " + str(volt())
