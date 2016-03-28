@@ -58,7 +58,7 @@ while True:
 
     if p.square:
         print "Capturing..."
-		camera.capture('image.jpg')
+        camera.capture("image.jpg")
 
     if p.l2:
         if not connected:
