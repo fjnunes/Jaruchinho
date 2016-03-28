@@ -28,7 +28,7 @@ camera = picamera.PiCamera()
 # camera.vflip = True
 # camera.hflip = True
 camera.resolution = (320, 240)
-camera.framerate = 30
+camera.framerate = 12
 
 while True:
     command = ''
