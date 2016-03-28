@@ -16,6 +16,7 @@ p = ps3()  # Create a PS3 object
 s = 80  # Initializ
 
 set_speed(50)
+
 # enable_com_timeout(1000)
 # Little step to indicate that the script has started
 enable_encoders()
