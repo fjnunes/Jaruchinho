@@ -12,11 +12,11 @@ recording = False
 # jaruchinho_socket.bind(('0.0.0.0', 8008))
 # jaruchinho_socket.listen(0)
 
-set_speed(50)
-
 p = ps3()  # Create a PS3 object
 s = 80  # Initializ
 
+set_speed(50)
+enable_com_timeout(1000)
 # Little step to indicate that the script has started
 enable_encoders()
 enc_tgt(1,1,1)
@@ -26,7 +26,7 @@ fwd()
 camera = picamera.PiCamera()
 # camera.vflip = True
 # camera.hflip = True
-camera.resolution = (640, 480)
+camera.resolution = (320, 240)
 camera.framerate = 12
 
 while True:
@@ -59,6 +59,9 @@ while True:
     if p.square:
         print "Capturing..."
         camera.capture("image.jpg")
+
+    if p.r1:
+        print "Volt: " + str(volt())
 
     if p.l2 or p.r2:
         if not connected:
