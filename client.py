@@ -59,10 +59,10 @@ while True:
             camera_socket = socket.socket()
             camera_socket.connect(('FernandoMacBookPro.local', 8000))
             camera_connection = camera_socket.makefile('wb')
-            jaruchinho_connection = jaruchinho_socket.accept()[0].makefile('rb')
+            # jaruchinho_connection = jaruchinho_socket.accept()[0].makefile('rb')
             connected = True
         camera.start_recording(camera_connection, format='mjpeg')
-        command = jaruchinho_connection.read(1)
+        # command = jaruchinho_connection.read(1)
     elif connected:
         camera.stop_recording()
 
