@@ -13,9 +13,8 @@ recording = False
 # jaruchinho_socket.listen(0)
 
 p = ps3()  # Create a PS3 object
-s = 160  # Initializ
 
-set_speed(50)
+set_speed(100)
 
 # enable_com_timeout(1000)
 # Little step to indicate that the script has started
