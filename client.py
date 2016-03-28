@@ -57,6 +57,7 @@ while True:
         print "Distance: "+ str(distance)
 
     if p.square:
+        print "Capturing..."
 		camera.capture('image.jpg')
 
     if p.l2:
