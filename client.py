@@ -29,6 +29,7 @@ camera = picamera.PiCamera()
 camera.resolution = (320, 240)
 camera.framerate = 12
 
+
 while True:
     command = ''
     distance = us_dist(15)
