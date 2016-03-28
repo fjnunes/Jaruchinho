@@ -6,6 +6,8 @@ from ps3 import *  # Import the PS3 library
 from gopigo import *  # Import the GoPiGo library
 
 connected = False
+recording = False
+
 jaruchinho_socket = socket.socket()
 jaruchinho_socket.bind(('0.0.0.0', 8008))
 jaruchinho_socket.listen(0)
@@ -61,10 +63,13 @@ while True:
             camera_connection = camera_socket.makefile('wb')
             # jaruchinho_connection = jaruchinho_socket.accept()[0].makefile('rb')
             connected = True
-        camera.start_recording(camera_connection, format='mjpeg')
+        if not recording
+            camera.start_recording(camera_connection, format='mjpeg')
+            recording = True
         # command = jaruchinho_connection.read(1)
     elif connected:
         camera.stop_recording()
+        recording = False
 
     # virtual bumper - prevents from moving fwd, left or right
     if distance <= 5 and not command == 'b':
