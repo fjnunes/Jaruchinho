@@ -26,9 +26,8 @@ fwd()
 camera = picamera.PiCamera()
 # camera.vflip = True
 # camera.hflip = True
-camera.resolution = (320, 240)
+camera.resolution = (1280,720)
 camera.framerate = 12
-
 
 while True:
     command = ''
