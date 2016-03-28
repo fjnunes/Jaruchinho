@@ -63,7 +63,7 @@ while True:
             camera_connection = camera_socket.makefile('wb')
             # jaruchinho_connection = jaruchinho_socket.accept()[0].makefile('rb')
             connected = True
-        if not recording
+        if not recording:
             camera.start_recording(camera_connection, format='mjpeg')
             recording = True
         # command = jaruchinho_connection.read(1)
