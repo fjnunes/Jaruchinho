@@ -27,7 +27,7 @@ camera = picamera.PiCamera()
 # camera.vflip = True
 # camera.hflip = True
 camera.resolution = (640, 480)
-camera.framerate = 4
+camera.framerate = 12
 
 while True:
     command = ''
@@ -60,7 +60,7 @@ while True:
         print "Capturing..."
         camera.capture("image.jpg")
 
-    if p.l2:
+    if p.l2 or p.r2:
         if not connected:
             camera_socket = socket.socket()
             camera_socket.connect(('FernandoMacBookPro.local', 8000))
