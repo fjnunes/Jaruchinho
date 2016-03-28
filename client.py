@@ -13,7 +13,7 @@ recording = False
 # jaruchinho_socket.listen(0)
 
 p = ps3()  # Create a PS3 object
-s = 80  # Initializ
+s = 120  # Initializ
 
 set_speed(50)
 
