@@ -56,6 +56,9 @@ while True:
     if p.triangle:
         print "Distance: "+ str(distance)
 
+    if p.square:
+		camera.capture('image.jpg')
+
     if p.l2:
         if not connected:
             camera_socket = socket.socket()

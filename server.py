@@ -39,7 +39,7 @@ try:
         if a!=-1 and b!=-1:
             jpg = bytes[a:b+2]
             bytes= bytes[b+2:]
-            image = cv2.imdecode(np.fromstring(jpg, dtype=np.uint8),cv2.CV_LOAD_IMAGE_GRAYSCALE)
+            image = cv2.imdecode(np.fromstring(jpg, dtype=np.uint8),cv2.CV_LOAD_IMAGE_COLOR)
             cv2.imshow('image',image)
             # image = cv2.resize(image,None,fx=0.25, fy=0.25, interpolation = cv2.INTER_AREA)
             # cv2.imwrite("/tmp/img.jpg", image);
