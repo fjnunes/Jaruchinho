@@ -8,15 +8,10 @@ from gopigo import *  # Import the GoPiGo library
 connected = False
 recording = False
 
-# jaruchinho_socket = socket.socket()
-# jaruchinho_socket.bind(('0.0.0.0', 8008))
-# jaruchinho_socket.listen(0)
-
 p = ps3()  # Create a PS3 object
 
-set_speed(100)
+set_speed(150)
 
-# enable_com_timeout(1000)
 # Little step to indicate that the script has started
 enable_encoders()
 enc_tgt(1,1,1)
@@ -28,6 +23,8 @@ camera = picamera.PiCamera()
 # camera.hflip = True
 camera.resolution = (320, 240)
 camera.framerate = 12
+
+enable_com_timeout(100)
 
 while True:
     command = ''
@@ -68,6 +65,9 @@ while True:
             camera_socket = socket.socket()
             camera_socket.connect(('FernandoMacBookPro.local', 8000))
             camera_connection = camera_socket.makefile('wb')
+            # jaruchinho_socket = socket.socket()
+            # jaruchinho_socket.bind(('0.0.0.0', 8008))
+            # jaruchinho_socket.listen(0)
             # jaruchinho_connection = jaruchinho_socket.accept()[0].makefile('rb')
             connected = True
         if not recording:
