@@ -10,7 +10,7 @@ recording = False
 
 p = ps3()  # Create a PS3 object
 
-set_speed(150)
+set_speed(110)
 
 # Little step to indicate that the script has started
 enable_encoders()
