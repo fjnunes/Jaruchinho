@@ -30,10 +30,9 @@ while True:
     distance = us_dist(15)
 
     stream = io.BytesIO()
-    camera.capture(stream, format='jpeg')
+    camera.capture(stream, format='jpeg', resize=(160, 120))
     stream.seek(0)
     image = Image.open(stream)
-    image = image.thumbnail((160, 120), Image.ANTIALIAS)
     image = image.convert('L') #makes it greyscale
     image_data = numpy.array(image)
     image_data = image_data.reshape(1, 19200)
