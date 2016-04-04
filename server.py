@@ -3,7 +3,7 @@ import cv2
 import numpy as np
 import tensorflow as tf
 import os.path
-import inference
+import model
 import input_data
 
 from tensorflow.python.platform import gfile
@@ -26,7 +26,7 @@ camera_socket.listen(0)
 # Accept a single connection and make a file-like object out of it
 camera_connection = camera_socket.accept()[0].makefile('rb')
 
-inf = inference.inference()
+inf = model.inference()
 
 i = 0
 f = 'r'
