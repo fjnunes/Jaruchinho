@@ -37,7 +37,7 @@ while True:
     image_data = numpy.array(image)
     image_data = image_data.reshape(1, 19200)
 
-    direction = inference.direction(image_data)
+    # command = inference.direction(image_data)
 
     # virtual bumper - prevents from moving fwd, left or right
     if distance <= 5 and not command == 'b':
