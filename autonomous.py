@@ -1,7 +1,7 @@
 import picamera
 import datetime as dt
 from gopigo import *  # Import the GoPiGo library
-import model
+# import model
 from PIL import Image
 import io
 import numpy
