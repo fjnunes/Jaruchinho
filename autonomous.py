@@ -23,7 +23,7 @@ enable_encoders()
 enc_tgt(1,1,1)
 fwd()
 
-inference = model.inference()
+# inference = model.inference()
 
 while True:
     command = ''
