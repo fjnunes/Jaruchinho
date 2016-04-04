@@ -6,14 +6,6 @@ from PIL import Image
 import io
 import numpy
 
-set_speed(50)
-
-enable_com_timeout(1000)
-# Little step to indicate that the script has started
-enable_encoders()
-enc_tgt(1,1,1)
-fwd()
-
 camera = picamera.PiCamera()
 # camera.vflip = True
 # camera.hflip = True
@@ -22,6 +14,14 @@ camera.framerate = 12
 
 # wait for the camera adjust the gain
 time.sleep(2)
+
+set_speed(50)
+
+enable_com_timeout(1000)
+# Little step to indicate that the script has started
+enable_encoders()
+enc_tgt(1,1,1)
+fwd()
 
 inference = model.inference()
 
@@ -33,6 +33,7 @@ while True:
     camera.capture(stream, format='jpeg')
     stream.seek(0)
     image = Image.open(stream)
+    image = image.thumbnail((160, 120), Image.ANTIALIAS)
     image = image.convert('L') #makes it greyscale
     image_data = numpy.array(image)
     image_data = image_data.reshape(1, 19200)
