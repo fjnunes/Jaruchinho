@@ -25,8 +25,6 @@ fwd()
 
 inference = model.inference()
 
-ImageFile.LOAD_TRUNCATED_IMAGES = True
-
 while True:
     command = ''
     distance = us_dist(15)
@@ -34,6 +32,7 @@ while True:
     stream = io.BytesIO()
     camera.capture(stream, format='jpeg', resize=(160, 120))
     stream.seek(0)
+    ImageFile.LOAD_TRUNCATED_IMAGES = True
     image = Image.open(stream)
     image = image.convert('L') #makes it greyscale
     image_data = numpy.array(image)
