@@ -10,7 +10,7 @@ camera = picamera.PiCamera()
 # camera.vflip = True
 # camera.hflip = True
 camera.resolution = (320, 240)
-camera.framerate = 12
+camera.framerate = 30
 
 # wait for the camera adjust the gain
 time.sleep(2)
