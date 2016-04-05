@@ -1,7 +1,7 @@
 import picamera
 import datetime as dt
 from gopigo import *  # Import the GoPiGo library
-# import model
+import model
 from PIL import Image, ImageFile
 import io
 import numpy
@@ -23,7 +23,7 @@ enable_encoders()
 enc_tgt(1,1,1)
 fwd()
 
-# inference = model.inference()
+inference = model.inference()
 
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
@@ -39,7 +39,7 @@ while True:
     image_data = numpy.array(image)
     image_data = image_data.reshape(1, 19200)
 
-    # command = inference.direction(image_data)
+    command = inference.direction(image_data)
 
     # virtual bumper - prevents from moving fwd, left or right
     if distance <= 5 and not command == 'b':
