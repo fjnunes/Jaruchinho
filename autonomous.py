@@ -2,7 +2,7 @@ import picamera
 import datetime as dt
 from gopigo import *  # Import the GoPiGo library
 # import model
-from PIL import Image
+from PIL import Image, ImageFile
 import io
 import numpy
 
@@ -24,6 +24,8 @@ enc_tgt(1,1,1)
 fwd()
 
 # inference = model.inference()
+
+ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 while True:
     command = ''
