@@ -34,7 +34,7 @@ while True:
 
     start = time.time()
     stream = io.BytesIO()
-    camera.capture(stream, format='png', resize=(160, 120)) # change to 'yuv' later
+    camera.capture_continuous(stream, format='png', resize=(160, 120), use_video_port=True) # change to 'yuv' later
     done = time.time()
     camera_elapsed = done - start
 
