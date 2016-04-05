@@ -36,7 +36,7 @@ while True:
     # camera.capture(stream, format='jpeg', resize=(160, 120))
     stream.seek(0)
     ImageFile.LOAD_TRUNCATED_IMAGES = True
-    image = Image.open(stream)
+    image = Image.open(stream.read())
     stream.seek(0)
     stream.truncate()
 
