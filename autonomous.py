@@ -25,8 +25,6 @@ fwd()
 
 inference = model.inference()
 
-
-
 while True:
     command = ''
     distance = us_dist(15)
