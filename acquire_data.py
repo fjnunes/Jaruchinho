@@ -41,8 +41,8 @@ camera = picamera.PiCamera()
 # camera.vflip = True
 # camera.hflip = True
 # camera.led = False
-camera.brightness = 60
-# camera.resolution = (640, 480)
+# camera.brightness = 60
+camera.resolution = (320, 240)
 
 p = ps3()  # Create a PS3 object
 print "Done"
@@ -70,15 +70,15 @@ while True:
 	stoped = False
 	set_speed(s)  # Update the speed
 	if p.up:  # If UP is pressed move forward
-		camera.capture('images/forward/image' + str(imgid) + '.jpg')
+		camera.capture('images/forward/image' + str(imgid) + '.jpg', use_video_port=True)
 		# enc_tgt(1,1,pulses)
 		fwd()
 	elif p.left:  # If LEFT is pressed turn left
-		camera.capture('images/left/image' + str(imgid) + '.jpg')
+		camera.capture('images/left/image' + str(imgid) + '.jpg', use_video_port=True)
 		# enc_tgt(0,1,pulses)
 		left()
 	elif p.right:  # If RIGHT is pressed move right
-		camera.capture('images/right/image' + str(imgid) + '.jpg')
+		camera.capture('images/right/image' + str(imgid) + '.jpg', use_video_port=True)
 		# enc_tgt(1,0,pulses)
 		right()
 	elif p.down:  # If DOWN is pressed go back
