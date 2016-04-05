@@ -34,7 +34,7 @@ class DataSet(object):
       # to [num examples, rows*columns] (assuming depth == 1)
       # assert images.shape[3] == 1
       images = images.reshape(images.shape[0],
-                              images.shape[1] * images.shape[2] * images.shape[3])
+                              images.shape[1] * images.shape[2])
       if dtype == tf.float32:
         # Convert from [0, 255] -> [0.0, 1.0].
         images = images.astype(numpy.float32)
@@ -94,6 +94,7 @@ def _read32(bytestream):
 def extract_image(filename):
   # image_data = gfile.FastGFile(filename, 'rb').read()
   jpgfile = Image.open(filename)
+  jpgfile.thumbnail((160, 120), Image.ANTIALIAS)
   jpgfile=jpgfile.convert('L') #makes it greyscale
   data = numpy.array(jpgfile)
   data = data.reshape(1, 19200)
