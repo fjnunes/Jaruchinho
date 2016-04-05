@@ -32,7 +32,6 @@ while True:
     stream = io.BytesIO()
     camera.capture(stream, format='png', resize=(160, 120)) # change to 'yuv' later
     stream.seek(0)
-    ImageFile.LOAD_TRUNCATED_IMAGES = True
     image = Image.open(stream)
 
     image = image.convert('L') #makes it greyscale
