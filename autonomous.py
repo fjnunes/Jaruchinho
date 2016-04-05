@@ -32,8 +32,7 @@ while True:
     distance = us_dist(15)
 
     stream = io.BytesIO()
-    # camera.capture_continuous(stream, 'jpeg', use_video_port=True)
-    camera.capture(stream, format='yuv', resize=(160, 120))
+    camera.capture(stream, format='png', resize=(160, 120)) # change to 'yuv' later
     stream.seek(0)
     ImageFile.LOAD_TRUNCATED_IMAGES = True
     image = Image.open(stream)
