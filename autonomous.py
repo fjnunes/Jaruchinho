@@ -6,6 +6,8 @@ from PIL import Image, ImageFile
 import io
 import numpy
 
+
+print "Starting..."
 camera = picamera.PiCamera()
 # camera.vflip = True
 # camera.hflip = True
@@ -13,16 +15,18 @@ camera.resolution = (320, 240)
 camera.framerate = 30
 
 # wait for the camera adjust the gain
+print "Warming up camera"
 time.sleep(2)
 
+print "Starting the motors"
 set_speed(50)
-
-enable_com_timeout(1000)
+# enable_com_timeout(1000)
 # Little step to indicate that the script has started
 enable_encoders()
 enc_tgt(1,1,1)
 fwd()
 
+print "Initializing inference"
 inference = model.inference()
 
 while True:
