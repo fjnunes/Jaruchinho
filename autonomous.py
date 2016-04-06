@@ -12,7 +12,7 @@ camera = picamera.PiCamera()
 # camera.vflip = True
 # camera.hflip = True
 camera.resolution = (320, 240)
-camera.shutter_speed = 30000
+# camera.shutter_speed = 30000
 # camera.framerate = 30
 
 # wait for the camera adjust the gain
@@ -41,7 +41,7 @@ while True:
     print "Camera"
     start = time.time()
     stream = io.BytesIO()
-    camera.capture(stream, format='png', resize=(160, 120)) # change to 'yuv' later
+    camera.capture(stream, format='png', resize=(160, 120), use_video_port=True) # change to 'yuv' later
     camera_elapsed = time.time() - start
 
     print "Image data"
