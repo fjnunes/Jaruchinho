@@ -70,14 +70,6 @@ print "Initializing inference"
 # inference = model.inference()
 
 while True:
-
-    RAM_stats = getRAMinfo()
-    RAM_total = round(int(RAM_stats[0]) / 1000,1)
-    RAM_used = round(int(RAM_stats[1]) / 1000,1)
-    RAM_free = round(int(RAM_stats[2]) / 1000,1)
-
-    print "Total: "+str(RAM_total)+"\tUsed: "+str(RAM_used)+"\tFree: "+str(RAM_free)
-
     command = ''
 
     print "Distance"
@@ -90,6 +82,13 @@ while True:
     stream = io.BytesIO()
     camera.capture(stream, format='jpeg', resize=(160, 120), use_video_port=True) # change to 'yuv' later
     camera_elapsed = time.time() - start
+
+    RAM_stats = getRAMinfo()
+    RAM_total = round(int(RAM_stats[0]) / 1000,1)
+    RAM_used = round(int(RAM_stats[1]) / 1000,1)
+    RAM_free = round(int(RAM_stats[2]) / 1000,1)
+
+    print "Total: "+str(RAM_total)+"\tUsed: "+str(RAM_used)+"\tFree: "+str(RAM_free)
 
     print "Image data"
     start = time.time()
