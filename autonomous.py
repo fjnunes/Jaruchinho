@@ -74,7 +74,8 @@ while True:
 
     print "Distance"
     start = time.time()
-    distance = us_dist(15)
+    # distance = us_dist(15)
+    distance = 100
     distance_elapsed = time.time() - start
 
     print "Camera"
