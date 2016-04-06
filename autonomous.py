@@ -1,7 +1,7 @@
 import picamera
 import time
 from gopigo import *  # Import the GoPiGo library
-import model
+# import model
 from PIL import Image, ImageFile
 import io
 import numpy
@@ -30,7 +30,7 @@ enc_tgt(1,1,1)
 fwd()
 
 print "Initializing inference"
-inference = model.inference()
+# inference = model.inference()
 
 while True:
     command = ''
@@ -57,7 +57,8 @@ while True:
 
     print "Inference"
     start = time.time()
-    command = inference.direction(image_data)
+    # command = inference.direction(image_data)
+    command = 'f'
     inference_elapsed = time.time() - start
 
     # virtual bumper - prevents from moving fwd, left or right
