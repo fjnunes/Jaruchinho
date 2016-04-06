@@ -2,7 +2,7 @@ import picamera
 import time
 from gopigo import *  # Import the GoPiGo library
 # import model
-import PIL
+from PIL import Image as PILim
 import io
 import numpy
 import os
@@ -92,7 +92,7 @@ while True:
     print "Image data"
     start = time.time()
     stream.seek(0)
-    image = PIL.Image.Image.open(stream)
+    image = PILim.open(stream)
     image = image.convert('L') #makes it greyscale
     image_data = numpy.array(image)
     image_data = image_data.reshape(1, 19200)
