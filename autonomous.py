@@ -1,11 +1,11 @@
-import picamera
-import time
-from gopigo import *  # Import the GoPiGo library
-import model
-from PIL import Image as PILim
 import io
 import numpy
 import os
+import picamera
+import time
+from gopigo import *  # Import the GoPiGo library
+from PIL import Image as PILim
+import model
 
 # Return CPU temperature as a character string
 def getCPUtemperature():
