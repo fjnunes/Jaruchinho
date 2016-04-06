@@ -92,7 +92,7 @@ while True:
     print "Image data"
     start = time.time()
     stream.seek(0)
-    image = PIL.Image.open(stream)
+    image = PIL.Image.Image.open(stream)
     image = image.convert('L') #makes it greyscale
     image_data = numpy.array(image)
     image_data = image_data.reshape(1, 19200)
