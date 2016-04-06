@@ -53,7 +53,7 @@ while True:
     image_elapsed = done - start
 
     start = time.time()
-    # command = inference.direction(image_data)
+    command = inference.direction(image_data)
     done = time.time()
     inference_elapsed = done - start
 
