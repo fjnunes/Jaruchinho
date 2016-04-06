@@ -12,7 +12,7 @@ camera = picamera.PiCamera()
 # camera.vflip = True
 # camera.hflip = True
 camera.resolution = (320, 240)
-camera.framerate = 30
+# camera.framerate = 30
 
 # wait for the camera adjust the gain
 print "Warming up camera"
@@ -31,7 +31,7 @@ inference = model.inference()
 
 while True:
     start = time.time()
-    command = ''
+    command = 'f'
     distance = us_dist(15)
     done = time.time()
     distance_elapsed = done - start
@@ -52,7 +52,7 @@ while True:
     image_elapsed = done - start
 
     start = time.time()
-    command = inference.direction(image_data)
+    # command = inference.direction(image_data)
     done = time.time()
     inference_elapsed = done - start
 
