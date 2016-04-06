@@ -1,7 +1,7 @@
 import picamera
 import time
 from gopigo import *  # Import the GoPiGo library
-import model
+# import model
 from PIL import Image, ImageFile
 import io
 import numpy
