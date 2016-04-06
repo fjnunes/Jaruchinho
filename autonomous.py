@@ -59,7 +59,7 @@ print "Warming up camera"
 time.sleep(2)
 
 print "Starting the motors"
-set_speed(50)
+set_speed(80)
 # enable_com_timeout(1000)
 # Little step to indicate that the script has started
 enable_encoders()
