@@ -4,7 +4,7 @@ import os
 import picamera
 import time
 from gopigo import *  # Import the GoPiGo library
-from PIL import Image as PILim
+from PIL import Image
 import model
 
 # Return CPU temperature as a character string
@@ -67,7 +67,7 @@ enc_tgt(1,1,1)
 fwd()
 
 print "Initializing inference"
-# inference = model.inference()
+inference = model.inference()
 
 while True:
     command = ''
@@ -92,7 +92,7 @@ while True:
     print "Image data"
     start = time.time()
     stream.seek(0)
-    image = PILim.open(stream)
+    image = Image.open(stream)
     image = image.convert('L') #makes it greyscale
     image_data = numpy.array(image)
     image_data = image_data.reshape(1, 19200)
@@ -100,8 +100,7 @@ while True:
 
     print "Inference"
     start = time.time()
-    # command = inference.direction(image_data)
-    command = 'f'
+    command = inference.direction(image_data)
     inference_elapsed = time.time() - start
 
     # virtual bumper - prevents from moving fwd, left or right
