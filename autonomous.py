@@ -2,7 +2,7 @@ import picamera
 import time
 from gopigo import *  # Import the GoPiGo library
 # import model
-from PIL import Image, ImageFile
+import PIL
 import io
 import numpy
 import os
@@ -83,17 +83,16 @@ while True:
     camera.capture(stream, format='jpeg', resize=(160, 120), use_video_port=True) # change to 'yuv' later
     camera_elapsed = time.time() - start
 
-    RAM_stats = getRAMinfo()
-    RAM_total = round(int(RAM_stats[0]) / 1000,1)
-    RAM_used = round(int(RAM_stats[1]) / 1000,1)
-    RAM_free = round(int(RAM_stats[2]) / 1000,1)
-
-    print "Total: "+str(RAM_total)+"\tUsed: "+str(RAM_used)+"\tFree: "+str(RAM_free)
+    # RAM_stats = getRAMinfo()
+    # RAM_total = round(int(RAM_stats[0]) / 1000,1)
+    # RAM_used = round(int(RAM_stats[1]) / 1000,1)
+    # RAM_free = round(int(RAM_stats[2]) / 1000,1)
+    # print "Total: "+str(RAM_total)+"\tUsed: "+str(RAM_used)+"\tFree: "+str(RAM_free)
 
     print "Image data"
     start = time.time()
     stream.seek(0)
-    image = Image.open(stream)
+    image = PIL.Image.open(stream)
     image = image.convert('L') #makes it greyscale
     image_data = numpy.array(image)
     image_data = image_data.reshape(1, 19200)
