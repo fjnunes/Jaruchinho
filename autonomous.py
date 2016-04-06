@@ -45,10 +45,11 @@ while True:
 
     start = time.time()
     # stream.seek(0)
-    # image = Image.open(stream)
-    # image = image.convert('L') #makes it greyscale
-    # image_data = numpy.array(image)
-    # image_data = image_data.reshape(1, 19200)
+    image = Image.open("image24.jpg")
+    image = image.thumbnail((160, 120), Image.ANTIALIAS)
+    image = image.convert('L') #makes it greyscale
+    image_data = numpy.array(image)
+    image_data = image_data.reshape(1, 19200)
     done = time.time()
     image_elapsed = done - start
 
