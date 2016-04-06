@@ -30,32 +30,32 @@ print "Initializing inference"
 inference = model.inference()
 
 while True:
-    start = time.time()
-    command = 'f'
-    distance = us_dist(15)
-    done = time.time()
-    distance_elapsed = done - start
+    command = ''
 
+    print "Distance"
+    start = time.time()
+    distance = us_dist(15)
+    distance_elapsed = time.time() - start
+
+    print "Camera"
     start = time.time()
     stream = io.BytesIO()
     camera.capture(stream, format='png', resize=(160, 120), use_video_port=True) # change to 'yuv' later
-    # time.sleep(0.1)
-    done = time.time()
-    camera_elapsed = done - start
+    camera_elapsed = time.time() - start
 
+    print "Image data"
     start = time.time()
-    # stream.seek(0)
-    image = Image.open("image24.png")
+    stream.seek(0)
+    image = Image.open(stream)
     image = image.convert('L') #makes it greyscale
     image_data = numpy.array(image)
     image_data = image_data.reshape(1, 19200)
-    done = time.time()
-    image_elapsed = done - start
+    image_elapsed = time.time() - start
 
+    print "Inference"
     start = time.time()
     command = inference.direction(image_data)
-    done = time.time()
-    inference_elapsed = done - start
+    inference_elapsed = time.time() - start
 
     # virtual bumper - prevents from moving fwd, left or right
     if distance <= 5 and not command == 'b':
@@ -64,6 +64,7 @@ while True:
 
     print(command+"\tdistance: "+str(distance_elapsed)+"\tcamera: "+str(camera_elapsed)+"\timage: "+str(image_elapsed)+"\tinference: "+str(inference_elapsed))
 
+    print "Command"
     if command == 'f':
         fwd()
     elif command == 'r':
