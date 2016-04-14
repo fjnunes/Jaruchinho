@@ -63,13 +63,3 @@ class inference:
         else:
             return 's'
 
-# inf = inference()
-# dir_path = "/Users/jaruche/Desktop/images/forward/"
-# for file in os.listdir(dir_path):
-#     # image_data = gfile.FastGFile(dir_path+file, 'r').read()
-#     image_data = input_data.extract_image(dir_path+file)
-#     image_data = image_data.convert('L')
-#     image_data = image_data.reshape(1, 19200)
-#     start = dt.datetime.now()
-#     result = inf.direction(image_data)
-#     print(result, (dt.datetime.now()-start).microseconds, file)
