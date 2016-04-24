@@ -4,7 +4,7 @@ import tensorflow as tf
 # The MNIST dataset has 10 classes, representing the digits 0 through 9.
 NUM_CLASSES = 3
 
-IMAGE_PIXELS = 160 * 120
+IMAGE_PIXELS = 160 * 120 / 2
 
 
 def inference(images, hidden1_units, hidden2_units):

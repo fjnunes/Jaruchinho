@@ -95,8 +95,9 @@ while True:
     stream.seek(0)
     image = Image.open(stream)
     image = image.convert('L') #makes it greyscale
+    image = image.crop((0, 60, 160, 120))
     image_data = numpy.array(image)
-    image_data = image_data.reshape(1, 19200)
+    image_data = image_data.reshape(1, 19200/2)
     image_elapsed = time.time() - start
 
     print "Inference"
