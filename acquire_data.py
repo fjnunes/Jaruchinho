@@ -38,11 +38,15 @@ import picamera
 
 print "Initializing"
 camera = picamera.PiCamera()
-# camera.vflip = True
-# camera.hflip = True
+camera.vflip = True
+camera.hflip = True
 # camera.led = False
 # camera.brightness = 60
 camera.resolution = (320, 240)
+
+# wait for the camera adjust the gain
+print "Warming up camera"
+time.sleep(2)
 
 p = ps3()  # Create a PS3 object
 print "Done"
