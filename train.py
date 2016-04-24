@@ -30,7 +30,7 @@ flags.DEFINE_boolean('fake_data', False, 'If true, uses fake data '
                      'for unit testing.')
 
 # Input and output file flags.
-flags.DEFINE_string('image_dir', './images',
+flags.DEFINE_string('image_dir', '../images',
                            """Path to folders of labeled images.""")
 flags.DEFINE_string('output_graph', './output_graph.pb',
                            """Where to save the trained graph.""")
