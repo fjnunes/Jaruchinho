@@ -46,8 +46,8 @@ def getDiskSpace():
 
 print "Starting..."
 camera = picamera.PiCamera()
-# camera.vflip = True
-# camera.hflip = True
+camera.vflip = True
+camera.hflip = True
 camera.resolution = (320, 240)
 # camera.start_preview()
 

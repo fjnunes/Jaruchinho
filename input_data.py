@@ -93,11 +93,11 @@ def _read32(bytestream):
 
 def extract_image(filename):
   # image_data = gfile.FastGFile(filename, 'rb').read()
-  jpgfile = Image.open(filename)
-  jpgfile.thumbnail((160, 120), Image.ANTIALIAS)
-  jpgfile=jpgfile.convert('L') #makes it greyscale
-  jpgfile=jpgfile.crop((0, 60, 160, 120))
-  data = numpy.array(jpgfile)
+  image = Image.open(filename)
+  image.thumbnail((160, 120), Image.ANTIALIAS)
+  image = image.convert('L') #makes it greyscale
+  image = image.crop((0, 60, 160, 120))
+  data = numpy.array(image)
   data = data.reshape(1, 19200/2)
 
   return data
