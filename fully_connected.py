@@ -68,7 +68,7 @@ def loss(logits, labels):
   cross_entropy = tf.nn.softmax_cross_entropy_with_logits(logits,
                                                           onehot_labels,
                                                           name='xentropy')
-  loss = tf.add(tf.reduce_mean(cross_entropy, name='xentropy_mean'), tf.nn.l2_normalize(logits, dim=1))
+  loss = tf.reduce_mean(cross_entropy, name='xentropy_mean')
   return loss
 
 
