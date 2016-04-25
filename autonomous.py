@@ -72,13 +72,13 @@ inference = model.inference()
 while True:
     command = ''
 
-    print "Distance"
+    # print "Distance"
     start = time.time()
     # distance = us_dist(15)
     distance = 100
     distance_elapsed = time.time() - start
 
-    print "Camera"
+    # print "Camera"
     start = time.time()
     stream = io.BytesIO()
     camera.capture(stream, format='jpeg', resize=(160, 120), use_video_port=True) # change to 'yuv' later
@@ -90,7 +90,7 @@ while True:
     # RAM_free = round(int(RAM_stats[2]) / 1000,1)
     # print "Total: "+str(RAM_total)+"\tUsed: "+str(RAM_used)+"\tFree: "+str(RAM_free)
 
-    print "Image data"
+    # print "Image data"
     start = time.time()
     stream.seek(0)
     image = Image.open(stream)
@@ -100,7 +100,7 @@ while True:
     image_data = image_data.reshape(1, 19200/2)
     image_elapsed = time.time() - start
 
-    print "Inference"
+    # print "Inference"
     start = time.time()
     command = inference.direction(image_data)
     inference_elapsed = time.time() - start
@@ -110,9 +110,9 @@ while True:
         print "Bump!"
         command = 's'
 
-    print(command+"\tdistance: "+str(distance_elapsed)+"\tcamera: "+str(camera_elapsed)+"\timage: "+str(image_elapsed)+"\tinference: "+str(inference_elapsed))
+    # print(command+"\tdistance: "+str(distance_elapsed)+"\tcamera: "+str(camera_elapsed)+"\timage: "+str(image_elapsed)+"\tinference: "+str(inference_elapsed))
 
-    print "Command"
+    # print "Command"
     if command == 'f':
         fwd()
     elif command == 'r':
