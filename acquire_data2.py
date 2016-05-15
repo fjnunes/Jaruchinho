@@ -60,7 +60,10 @@ if not os.path.exists("images"):
 print "Capturing..."
 while True:
 	ser.write("T\n")
-	throtle = int(ser.readline())
+	throtle = ser.readline()
+	if (throtle == ''):
+		continue
+	throtle = int(throtle)
 	if (throtle < 1486 + 20 and throtle < 1486 - 20):
 		continue
 
