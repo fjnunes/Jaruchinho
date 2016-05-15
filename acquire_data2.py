@@ -60,12 +60,12 @@ if not os.path.exists("images"):
 print "Capturing..."
 while True:
 	ser.write("T\n")
-	throtle = int(serial.readline())
+	throtle = int(ser.readline())
 	if (throtle < 1486 + 20 and throtle < 1486 - 20):
 		continue
 
 	ser.write("S\n")
-	steering = serial.readline()
+	steering = ser.readline()
 	camera.capture('images/'+steering +'_'+ str(imgid) + '.jpg', use_video_port=True)
 
 	imgid += 1
