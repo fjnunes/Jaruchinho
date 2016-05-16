@@ -77,6 +77,8 @@ with picamera.PiCamera() as camera:
     camera.resolution = (320, 240)
     camera.framerate = 30
     time.sleep(2)
+    startTime = time.time()
+    count = 0
     camera.capture_sequence(streams(), use_video_port=True)
 
 # Shut down the processors in an orderly fashion
