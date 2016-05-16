@@ -9,9 +9,6 @@ done = False
 lock = threading.Lock()
 pool = []
 
-global startTime
-global count
-
 startTime = time.time()
 count = 0
 
@@ -35,6 +32,8 @@ class ImageProcessor(threading.Thread):
                     # Read the image and do some processing on it
                     im = Image.open(self.stream)
                     # time.sleep(0.01)
+                    global count
+                    global startTime
                     count += 1
                     if count % 100 == 0:
                         print count / (time.time() - startTime)
