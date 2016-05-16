@@ -9,7 +9,11 @@ done = False
 lock = threading.Lock()
 pool = []
 
+global startTime
+global count
 
+startTime = time.time()
+count = 0
 
 class ImageProcessor(threading.Thread):
 
@@ -19,9 +23,6 @@ class ImageProcessor(threading.Thread):
         self.event = threading.Event()
         self.terminated = False
         self.start()
-
-        self.startTime = time.time()
-        self.count = 0
 
     def run(self):
         # This method runs in a separate thread
@@ -34,11 +35,11 @@ class ImageProcessor(threading.Thread):
                     # Read the image and do some processing on it
                     im = Image.open(self.stream)
                     # time.sleep(0.01)
-                    self.count += 1
-                    if self.count % 100 == 0:
-                        print self.count / (time.time() - self.startTime)
-                        self.startTime = time.time()
-                        self.count = 0
+                    count += 1
+                    if count % 100 == 0:
+                        print count / (time.time() - startTime)
+                        startTime = time.time()
+                        count = 0
 
                     #...
                     #...
