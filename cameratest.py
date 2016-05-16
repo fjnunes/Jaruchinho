@@ -35,7 +35,7 @@ class ImageProcessor(threading.Thread):
                     im = Image.open(self.stream)
                     # time.sleep(0.01)
                     self.count += 1
-                    if (self.count % 1000):
+                    if self.count % 100 == 0:
                         print self.count / (time.time() - self.startTime)
                         self.startTime = time.time()
                         self.count = 0
