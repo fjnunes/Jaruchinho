@@ -82,7 +82,7 @@ def streams():
 with picamera.PiCamera() as camera:
     pool = [ImageProcessor() for i in range(4)]
     camera.resolution = (320, 240)
-    camera.framerate = 90
+    camera.framerate = 60
     time.sleep(2)
     startTime = time.time()
     count = 0
