@@ -33,9 +33,9 @@ class ImageProcessor(threading.Thread):
                     self.stream.seek(0)
                     # Read the image and do some processing on it
                     im = Image.open(self.stream)
-                    time.sleep(0.01)
+                    # time.sleep(0.01)
                     self.count += 1
-                    if (self.count % 100):
+                    if (self.count % 1000):
                         print self.count / (time.time() - self.startTime)
                         self.startTime = time.time()
                         self.count = 0
