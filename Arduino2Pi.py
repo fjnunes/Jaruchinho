@@ -13,7 +13,7 @@ while True:
 
     ser.write("t1650\n")
     response = ser.readline()
-    if (response != "OK\r\n" or tookover) and int(response) > 1486+20 :
+    if (response != "OK\r\n" or tookover) and response != '' and int(response) > 1486+20 :
         print "Took over"
 
     time.sleep(0.1)
