@@ -45,6 +45,9 @@ class ImageProcessor(threading.Thread):
                     # Set done to True if you want the script to terminate
                     # at some point
                     #done=True
+                except KeyboardInterrupt:
+                    done = True
+                    pass
                 finally:
                     # Reset the stream and event
                     self.stream.seek(0)
