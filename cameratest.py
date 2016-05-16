@@ -31,7 +31,7 @@ class ImageProcessor(threading.Thread):
                     self.stream.seek(0)
                     # Read the image and do some processing on it
                     im = Image.open(self.stream)
-                    time.sleep(0.05)
+                    time.sleep(0.1)
                     global count
                     global startTime
                     count += 1
@@ -74,7 +74,7 @@ def streams():
 with picamera.PiCamera() as camera:
     pool = [ImageProcessor() for i in range(8)]
     camera.resolution = (320, 240)
-    camera.framerate = 30
+    camera.framerate = 60
     time.sleep(2)
     startTime = time.time()
     count = 0
