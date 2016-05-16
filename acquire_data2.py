@@ -38,6 +38,10 @@ import time
 import os
 
 print "Initializing"
+
+if not os.path.exists("images"):
+	os.makedirs("images")
+
 camera = picamera.PiCamera()
 # camera.vflip = True
 # camera.hflip = True
@@ -49,13 +53,12 @@ camera.resolution = (320, 240)
 print "Warming up camera"
 time.sleep(2)
 
+camera.start_recording('/home/pi/video.h264')
+
 imgid = 0
 recording = False
 
 ser = serial.Serial('/dev/ttyACM0', 115200, timeout=1)
-
-if not os.path.exists("images"):
-	os.makedirs("images")
 
 print "Capturing..."
 while True:
