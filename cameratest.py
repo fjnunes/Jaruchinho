@@ -3,6 +3,8 @@ import time
 import threading
 import picamera
 from PIL import Image
+import numpy
+import model
 
 # Create a pool of image processors
 done = False
@@ -19,6 +21,7 @@ class ImageProcessor(threading.Thread):
         self.stream = io.BytesIO()
         self.event = threading.Event()
         self.terminated = False
+        self.inference = model.inference()
         self.start()
 
     def run(self):
@@ -30,8 +33,13 @@ class ImageProcessor(threading.Thread):
                 try:
                     self.stream.seek(0)
                     # Read the image and do some processing on it
-                    im = Image.open(self.stream)
-                    time.sleep(0.1)
+                    image = Image.open(self.stream)
+                    image = image.convert('L')  # makes it greyscale
+                    image = image.crop((0, 60, 160, 120))
+                    image_data = numpy.array(image)
+                    image_data = image_data.reshape(1, 19200 / 2)
+                    command = self.inference.direction(image_data)
+
                     global count
                     global startTime
                     count += 1
