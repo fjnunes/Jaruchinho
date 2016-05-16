@@ -31,7 +31,7 @@ class ImageProcessor(threading.Thread):
                     self.stream.seek(0)
                     # Read the image and do some processing on it
                     im = Image.open(self.stream)
-                    # time.sleep(0.01)
+                    time.sleep(0.05)
                     global count
                     global startTime
                     count += 1
