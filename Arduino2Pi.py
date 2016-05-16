@@ -11,9 +11,9 @@ while True:
         print "Took over S"
 
 
-    # ser.write("t1650\n")
-    # throtle = ser.readline()
-    # if (servo != servoVal):
-    #     print "Took over throtle"
+    ser.write("t1650\n")
+    response = ser.readline()
+    if response != "OK\r\n":
+        print "Took over throtle"
 
     time.sleep(0.1)
