@@ -13,8 +13,8 @@ import re
 from tensorflow.python.platform import gfile
 from tensorflow.python.client import graph_util
 
-import fully_connected
-import input_data
+import regression
+import regression_data
 
 # Basic model parameters as external flags.
 flags = tf.app.flags
@@ -60,8 +60,8 @@ def placeholder_inputs(batch_size, name=''):
   # image and label tensors, except the first dimension is now batch_size
   # rather than the full size of the train or test data sets.
   images_placeholder = tf.placeholder(tf.float32, shape=(None,
-                                                         fully_connected.IMAGE_PIXELS), name=name)
-  labels_placeholder = tf.placeholder(tf.int32, shape=(batch_size))
+                                                         regression.IMAGE_PIXELS), name=name)
+  labels_placeholder = tf.placeholder(tf.float32, shape=(batch_size))
   return images_placeholder, labels_placeholder
 
 
@@ -145,20 +145,21 @@ def run_training():
         FLAGS.batch_size, name="input_images")
 
     # Build a Graph that computes predictions from the inference model.
-    logits = fully_connected.inference(images_placeholder,
+    inference = regression.inference(images_placeholder,
                              FLAGS.hidden1,
                              FLAGS.hidden2)
 
-    softmax = tf.nn.softmax(logits, name="final_result")
+    # softmax = tf.nn.softmax(logits, name="final_result")
+    # result = tf.Variable(inference, name="final_result")
 
     # Add to the Graph the Ops for loss calculation.
-    loss = fully_connected.loss(logits, labels_placeholder)
+    loss = regression.loss(inference, labels_placeholder)
 
     # Add to the Graph the Ops that calculate and apply gradients.
-    train_op = fully_connected.training(loss, FLAGS.learning_rate)
+    train_op = regression.training(loss, FLAGS.learning_rate)
 
     # Add the Op to compare the logits to the labels during evaluation.
-    eval_correct = fully_connected.evaluation(logits, labels_placeholder)
+    eval_correct = regression.evaluation(inference, labels_placeholder)
 
     # Build the summary operation based on the TF collection of Summaries.
     summary_op = tf.merge_all_summaries()
