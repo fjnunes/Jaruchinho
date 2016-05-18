@@ -45,14 +45,16 @@ class ImageProcessor(threading.Thread):
                     serial.write("B\n")
                     status = serial.readline()
 
-                    if status == "True\r\n":
+                    if status != "0":
                         ## Learning - transmitter busy and throttle forward
                         # Read values from Arduino and save as data example along with the image
                         serial.write("S\n")
                         steering = serial.readline()
                         serial.write("T\n")
                         throttle = serial.readline()
-                        image.save(steering+'_'+throttle+".jpg")
+                        fileName = steering+'_'+throttle+".jpg"
+                        print fileName
+                        image.save(fileName)
                     else:
                         ## Predicting - transmitter idle
                         # Perform forward pass using the image and send command to Arduino
@@ -108,7 +110,7 @@ def streams():
 with picamera.PiCamera() as camera:
     pool = [ImageProcessor() for i in range(4)]
     camera.resolution = (320, 240)
-    camera.framerate = 60
+    camera.framerate = 20
     time.sleep(2)
     startTime = time.time()
     count = 0
