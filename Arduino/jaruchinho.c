@@ -205,41 +205,39 @@ void loop()
 
     bUpdateFlags = 0;
   }
-//  else {
-    if (Serial.available())  {
-      int command = Serial.read();
-      int value = 0;
-      switch (command) {
-        case 'B':
-          if (idle)
-            Serial.print("0");
-          else
-            Serial.print("1");
-          break;
-        case 'T':
-          Serial.println(unThrottleIn);ls
 
-          break;
-        case 'S':
-          Serial.println(unSteeringIn);
-          break;
-        case 'A':
-          Serial.println(unAuxIn);
-          break;
-        case 's':
-          value = Serial.parseInt();
-          if (idle)
-            CRCArduinoFastServos::writeMicroseconds(SERVO_STEERING,value);
-          break;
-        case 't':
-          value = Serial.parseInt();
-          if (idle)
-            CRCArduinoFastServos::writeMicroseconds(SERVO_THROTTLE,value);
-          break;
-        default: break;
-      }
+  if (Serial.available())  {
+    int command = Serial.read();
+    int value = 0;
+    switch (command) {
+      case 'B':
+        if (idle)
+          Serial.print("0");
+        else
+          Serial.print("1");
+        break;
+      case 'T':
+        Serial.println(unThrottleIn);
+        break;
+      case 'S':
+        Serial.println(unSteeringIn);
+        break;
+      case 'A':
+        Serial.println(unAuxIn);
+        break;
+      case 's':
+        value = Serial.parseInt();
+        if (idle)
+          CRCArduinoFastServos::writeMicroseconds(SERVO_STEERING,value);
+        break;
+      case 't':
+        value = Serial.parseInt();
+        if (idle)
+          CRCArduinoFastServos::writeMicroseconds(SERVO_THROTTLE,value);
+        break;
+      default: break;
     }
-//  }
+  }
 
 //  if(currentMillis - previousMillis > interval) {
 //    // save the last time you blinked the LED
