@@ -30,21 +30,17 @@ class ImageProcessor(threading.Thread):
     def run(self):
         # This method runs in a separate thread
         global done
+        global serial
+        global count
+        global startTime
+
         while not self.terminated:
             # Wait for an image to be written to the stream
             if self.event.wait(1):
                 try:
                     # Read the image and do some processing on it
-                    self.stream.seek(0)
-                    image = Image.open(self.stream)
 
-                    # image is captured regardless of learning / predicting
-
-                    # Check if transmitter is idle
-                    global serial
-                    global count
-                    global startTime
-
+                    # read values from Arduino
                     with lock:
                         serial.write("B\n")
                         status = serial.read()
@@ -53,6 +49,11 @@ class ImageProcessor(threading.Thread):
                         serial.write("T\n")
                         throttle = serial.readline().rstrip()
 
+                    # image is captured regardless of learning / predicting
+                    self.stream.seek(0)
+                    image = Image.open(self.stream)
+
+                    # Check if transmitter is idle
                     if status != "0":
                         ## Learning - transmitter busy and throttle forward
                         # Read values from Arduino and save as data example along with the image
