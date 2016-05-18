@@ -47,14 +47,14 @@ class ImageProcessor(threading.Thread):
                         serial.write("B\n")
                         status = serial.read()
                         serial.write("S\n")
-                        steering = serial.readline()
+                        steering = serial.readline().rstrip()
                         serial.write("T\n")
-                        throttle = serial.readline()
+                        throttle = serial.readline().rstrip()
 
                     if status != "0":
                         ## Learning - transmitter busy and throttle forward
                         # Read values from Arduino and save as data example along with the image
-                        fileName = steering+'_'+throttle+".jpg"
+                        fileName = "images/" + steering+'_'+throttle+'_'+str(count)+".jpg"
                         print fileName
                         image.save(fileName)
                     else:
@@ -76,7 +76,6 @@ class ImageProcessor(threading.Thread):
                     if count % 100 == 0:
                         print count / (time.time() - startTime)
                         startTime = time.time()
-                        count = 0
 
                     #...
                     #...
