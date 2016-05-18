@@ -13,6 +13,7 @@ lock = threading.Lock()
 pool = []
 
 startTime = time.time()
+inferenceTime = 0
 count = 0
 
 serial = serial.Serial('/dev/ttyACM0', 115200, timeout=1)
@@ -33,6 +34,7 @@ class ImageProcessor(threading.Thread):
         global serial
         global count
         global startTime
+        global inferenceTime
 
         while not self.terminated:
             # Wait for an image to be written to the stream
@@ -64,19 +66,22 @@ class ImageProcessor(threading.Thread):
                         ## Predicting - transmitter idle
                         # Perform forward pass using the image and send command to Arduino
                         # Keep track of time spent on prediction
+                        inferenceStart = time.time()
                         image = image.convert('L')  # makes it greyscale
                         image = image.crop((0, 60, 160, 120))
                         image_data = numpy.array(image)
                         image_data = image_data.reshape(1, 19200 / 2)
                         steering, throttle = self.inference.direction(image_data)
+                        inferenceTime += time.time()-inferenceStart
                         serial.write("s"+str(steering)+"\n")
                         serial.write("t" + str(throttle) + "\n")
 
                     # Evaluate frame rate performance
                     count += 1
                     if count % 100 == 0:
-                        print 100 / (time.time() - startTime)
+                        print "Frame rate: " + str(100 / (time.time() - startTime)) + " Delay: " + inferenceTime / 100
                         startTime = time.time()
+                        inferenceTime = 0
 
                     #...
                     #...
@@ -115,6 +120,7 @@ with picamera.PiCamera() as camera:
     camera.framerate = 20
     time.sleep(2)
     startTime = time.time()
+    inferenceTime = 0
     count = 0
     camera.capture_sequence(streams(), use_video_port=True)
 
