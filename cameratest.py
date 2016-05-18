@@ -45,7 +45,7 @@ class ImageProcessor(threading.Thread):
 
                     with lock:
                         serial.write("B\n")
-                        status = serial.readline()
+                        status = serial.read()
                         serial.write("S\n")
                         steering = serial.readline()
                         serial.write("T\n")
