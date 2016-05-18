@@ -52,7 +52,7 @@ class inference:
         result = self.sess.run(ensure_name_has_port(final_tensor_name),
             { ensure_name_has_port(image_data_tensor_name): image_data })
 
-        return 1200, 1486
+        return 1200, 1650
         # print(result)
         argmax = np.argmax(result)
         if argmax == 0:
