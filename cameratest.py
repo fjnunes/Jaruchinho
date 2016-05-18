@@ -42,6 +42,8 @@ class ImageProcessor(threading.Thread):
 
                     # Check if transmitter is idle
                     global serial
+                    global count
+                    global startTime
 
                     with lock:
                         serial.write("B\n")
@@ -70,11 +72,9 @@ class ImageProcessor(threading.Thread):
                         serial.write("t" + str(throttle) + "\n")
 
                     # Evaluate frame rate performance
-                    global count
-                    global startTime
                     count += 1
                     if count % 100 == 0:
-                        print count / (time.time() - startTime)
+                        print 100 / (time.time() - startTime)
                         startTime = time.time()
 
                     #...
