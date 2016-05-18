@@ -46,15 +46,14 @@ class ImageProcessor(threading.Thread):
                     with lock:
                         serial.write("B\n")
                         status = serial.readline()
+                        serial.write("S\n")
+                        steering = serial.readline()
+                        serial.write("T\n")
+                        throttle = serial.readline()
 
                     if status != "0":
                         ## Learning - transmitter busy and throttle forward
                         # Read values from Arduino and save as data example along with the image
-                        with lock:
-                            serial.write("S\n")
-                            steering = serial.readline()
-                            serial.write("T\n")
-                            throttle = serial.readline()
                         fileName = steering+'_'+throttle+".jpg"
                         print fileName
                         image.save(fileName)
