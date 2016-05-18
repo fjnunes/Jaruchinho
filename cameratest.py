@@ -79,7 +79,7 @@ class ImageProcessor(threading.Thread):
                     # Evaluate frame rate performance
                     count += 1
                     if count % 100 == 0:
-                        print "Frame rate: " + str(100 / (time.time() - startTime)) + " Delay: " + inferenceTime / 100
+                        print "Frame rate: " + str(100 / (time.time() - startTime)) + " Delay: " + str(inferenceTime / 100)
                         startTime = time.time()
                         inferenceTime = 0
 
