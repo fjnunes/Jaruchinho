@@ -42,10 +42,10 @@ class ImageProcessor(threading.Thread):
 
                     # Check if transmitter is idle
                     global serial
-                    serial.write("Status\n")
+                    serial.write("B\n")
                     status = serial.readline()
 
-                    if status == "Busy":
+                    if status == "True\r\n":
                         ## Learning - transmitter busy and throttle forward
                         # Read values from Arduino and save as data example along with the image
                         serial.write("S\n")
