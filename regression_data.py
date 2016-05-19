@@ -96,9 +96,8 @@ def extract_image(filename):
   image = Image.open(filename)
   image.thumbnail((160, 120), Image.ANTIALIAS)
   image = image.convert('L') #makes it greyscale
-  image = image.crop((0, 60, 160, 120))
   data = numpy.array(image)
-  data = data.reshape(1, 19200/2)
+  data = data.reshape(1, 160*120)
 
   return data
 
@@ -122,7 +121,6 @@ def create_image_lists(image_dir, testing_percentage, validation_percentage):
     print("Image directory '" + image_dir + "' not found.")
     return None
   result = {}
-  sub_dirs = [x[0] for x in os.walk(image_dir)]
   training_images = []
   training_labels = []
   testing_images = []
@@ -130,46 +128,40 @@ def create_image_lists(image_dir, testing_percentage, validation_percentage):
   validation_images = []
   validation_labels = []
 
-  dir_index = 0
-  for sub_dir in sub_dirs:
-    extensions = ['jpg', 'jpeg', 'JPG', 'JPEG']
-    file_list = []
-    dir_name = os.path.basename(sub_dir)
-    print("Looking for images in '" + dir_name + "'")
-    for extension in extensions:
-      file_glob = os.path.join(image_dir, dir_name, '*.' + extension)
-      file_list.extend(glob.glob(file_glob))
-    if not file_list:
-      print('No files found')
-      continue
-    label_name = re.sub(r'[^a-z0-9]+', ' ', dir_name.lower())
-    for file_name in file_list:
-      base_name = os.path.basename(file_name)
-      # We want to ignore anything after '_nohash_' in the file name when
-      # deciding which set to put an image in, the data set creator has a way of
-      # grouping photos that are close variations of each other. For example
-      # this is used in the plant disease data set to group multiple pictures of
-      # the same leaf.
-      hash_name = re.sub(r'_nohash_.*$', '', file_name)
-      # This looks a bit magical, but we need to decide whether this file should
-      # go into the training, testing, or validation sets, and we want to keep
-      # existing files in the same set even if more files are subsequently
-      # added.
-      # To do that, we need a stable way of deciding based on just the file name
-      # itself, so we do a hash of that and then use that to generate a
-      # probability value that we use to assign it.
-      percentage_hash = (int(
-          hashlib.sha1(hash_name).hexdigest(), 16) % (65536)) * (100 / 65535.0)
-      if percentage_hash < validation_percentage:
-        validation_images.append(extract_image(sub_dir+'/'+base_name))
-        validation_labels.append(dir_index)
-      elif percentage_hash < (testing_percentage + validation_percentage):
-        testing_images.append(extract_image(sub_dir+'/'+base_name))
-        testing_labels.append(dir_index)
-      else:
-        training_images.append(extract_image(sub_dir+'/'+base_name))
-        training_labels.append(dir_index)
-    dir_index += 1
+  file_list = []
+  dir_name = os.path.basename(image_dir)
+  file_glob = os.path.join(image_dir, '*.jpg')
+  file_list.extend(glob.glob(file_glob))
+  for file_name in file_list:
+    base_name = os.path.basename(file_name)
+    steering = float(re.search("(\d+)[^_]", base_name).group(0))
+    label = (steering - 1552)/(1979-980)
+
+    # We want to ignore anything after '_nohash_' in the file name when
+    # deciding which set to put an image in, the data set creator has a way of
+    # grouping photos that are close variations of each other. For example
+    # this is used in the plant disease data set to group multiple pictures of
+    # the same leaf.
+    hash_name = re.sub(r'_nohash_.*$', '', file_name)
+    # This looks a bit magical, but we need to decide whether this file should
+    # go into the training, testing, or validation sets, and we want to keep
+    # existing files in the same set even if more files are subsequently
+    # added.
+    # To do that, we need a stable way of deciding based on just the file name
+    # itself, so we do a hash of that and then use that to generate a
+    # probability value that we use to assign it.
+    percentage_hash = (int(
+        hashlib.sha1(hash_name).hexdigest(), 16) % (65536)) * (100 / 65535.0)
+    if percentage_hash < validation_percentage:
+      validation_images.append(extract_image(file_name))
+      validation_labels.append(label)
+    elif percentage_hash < (testing_percentage + validation_percentage):
+      testing_images.append(extract_image(file_name))
+      testing_labels.append(label)
+    else:
+      training_images.append(extract_image(file_name))
+      training_labels.append(label)
+
     # result[label_name] = {
     #     'dir': dir_name,
     #     'training': training_images,

@@ -19,11 +19,11 @@ import regression_data
 # Basic model parameters as external flags.
 flags = tf.app.flags
 FLAGS = flags.FLAGS
-flags.DEFINE_float('learning_rate', 0.01, 'Initial learning rate.')
-flags.DEFINE_integer('max_steps', 20000, 'Number of steps to run trainer.')
+flags.DEFINE_float('learning_rate', 0.0001, 'Initial learning rate.')
+flags.DEFINE_integer('max_steps', 2000, 'Number of steps to run trainer.')
 flags.DEFINE_integer('hidden1', 128, 'Number of units in hidden layer 1.')
 flags.DEFINE_integer('hidden2', 32, 'Number of units in hidden layer 2.')
-flags.DEFINE_integer('batch_size', 100, 'Batch size.  '
+flags.DEFINE_integer('batch_size', 256, 'Batch size.  '
                      'Must divide evenly into the dataset sizes.')
 flags.DEFINE_string('train_dir', 'data', 'Directory to put the training data.')
 flags.DEFINE_boolean('fake_data', False, 'If true, uses fake data '
@@ -135,7 +135,7 @@ def run_training():
   # Get the sets of images and labels for training, validation, and
   # test on fully_connected.
   # Look at the folder structure, and create lists of all the images.
-  data_sets = input_data.create_image_lists(FLAGS.image_dir, FLAGS.testing_percentage,
+  data_sets = regression_data.create_image_lists(FLAGS.image_dir, FLAGS.testing_percentage,
                                    FLAGS.validation_percentage)
 
   # Tell TensorFlow that the model will be built into the default Graph.
@@ -148,9 +148,10 @@ def run_training():
     inference = regression.inference(images_placeholder,
                              FLAGS.hidden1,
                              FLAGS.hidden2)
-
+    # logits = fully_connected.inference(images_placeholder,
+    #                                  FLAGS.hidden1,
+    #                                  FLAGS.hidden2)
     # softmax = tf.nn.softmax(logits, name="final_result")
-    # result = tf.Variable(inference, name="final_result")
 
     # Add to the Graph the Ops for loss calculation.
     loss = regression.loss(inference, labels_placeholder)

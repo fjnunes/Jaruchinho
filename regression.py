@@ -4,7 +4,7 @@ import tensorflow as tf
 # The MNIST dataset has 10 classes, representing the digits 0 through 9.
 NUM_CLASSES = 3
 
-IMAGE_PIXELS = 160 * 120 / 2
+IMAGE_PIXELS = 160 * 120
 
 
 def inference(images, hidden1_units, hidden2_units):
@@ -41,8 +41,8 @@ def inference(images, hidden1_units, hidden2_units):
                             stddev=1.0 / math.sqrt(float(hidden2_units))),
         name='weights')
     bias = tf.Variable(tf.zeros([1]), name='bias')
-    regression = tf.nn.xw_plus_b(hidden2, weights, bias, name="final_result")
 
+  regression = tf.nn.xw_plus_b(hidden2, weights, bias, name="final_result")
   return regression
 
 
@@ -54,6 +54,7 @@ def loss(regression, labels):
   Returns:
     loss: Loss tensor of type float.
   """
+  inference = tf.reshape(regression, tf.shape(labels))
   loss = tf.reduce_mean(tf.squared_difference(regression, labels), name='squared_mean')
   return loss
 
@@ -73,7 +74,7 @@ def training(loss, learning_rate):
   # Add a scalar summary for the snapshot loss.
   tf.scalar_summary(loss.op.name, loss)
   # Create the gradient descent optimizer with the given learning rate.
-  optimizer = tf.train.GradientDescentOptimizer(learning_rate)
+  optimizer = tf.train.AdamOptimizer(learning_rate)
   # Create a variable to track the global step.
   global_step = tf.Variable(0, name='global_step', trainable=False)
   # Use the optimizer to apply the gradients that minimize the loss

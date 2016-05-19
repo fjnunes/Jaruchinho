@@ -3,16 +3,21 @@ import tensorflow as tf
 import os
 import os.path
 import datetime as dt
+import glob
+import re
 
 import input_data
 import model
-inf = model.inference()
-dir_path = "./images/forward/"
-for file in os.listdir(dir_path):
-    # image_data = gfile.FastGFile(dir_path+file, 'r').read()
-    image_data = input_data.extract_image(dir_path+file)
-    image_data = image_data.convert('L')
-    image_data = image_data.reshape(1, 19200)
-    start = dt.datetime.now()
-    result = inf.direction(image_data)
-    print(result, (dt.datetime.now()-start).microseconds, file)
+
+inference = model.inference()
+
+dir_path = "../images/"
+file_glob = os.path.join(dir_path, '*.jpg')
+
+for file in glob.glob(file_glob):
+    image_data = input_data.extract_image(file)
+    base_name = os.path.basename(file)
+    steering = float(re.search("(\d+)[^_]", base_name).group(0))
+    label = (steering - 1552) / (1979 - 980)
+    result = inference.direction(image_data)
+    print str(result) +": label: "+str(label)
