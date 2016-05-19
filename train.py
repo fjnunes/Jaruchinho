@@ -19,7 +19,7 @@ import regression_data
 # Basic model parameters as external flags.
 flags = tf.app.flags
 FLAGS = flags.FLAGS
-flags.DEFINE_float('learning_rate', 0.0001, 'Initial learning rate.')
+flags.DEFINE_float('learning_rate', 0.00001, 'Initial learning rate.')
 flags.DEFINE_integer('max_steps', 2000, 'Number of steps to run trainer.')
 flags.DEFINE_integer('hidden1', 128, 'Number of units in hidden layer 1.')
 flags.DEFINE_integer('hidden2', 32, 'Number of units in hidden layer 2.')
@@ -59,8 +59,7 @@ def placeholder_inputs(batch_size, name=''):
   # Note that the shapes of the placeholders match the shapes of the full
   # image and label tensors, except the first dimension is now batch_size
   # rather than the full size of the train or test data sets.
-  images_placeholder = tf.placeholder(tf.float32, shape=(None,
-                                                         regression.IMAGE_PIXELS), name=name)
+  images_placeholder = tf.placeholder(tf.float32, shape=(None, regression.IMAGE_PIXELS), name=name)
   labels_placeholder = tf.placeholder(tf.float32, shape=(batch_size))
   return images_placeholder, labels_placeholder
 
@@ -105,17 +104,16 @@ def do_eval(sess,
       input_data.read_data_sets().
   """
   # And run one epoch of eval.
-  true_count = 0  # Counts the number of correct predictions.
+  precision = 0  # Counts the number of correct predictions.
   steps_per_epoch = data_set.num_examples // FLAGS.batch_size
   num_examples = steps_per_epoch * FLAGS.batch_size
   for step in xrange(steps_per_epoch):
     feed_dict = fill_feed_dict(data_set,
                                images_placeholder,
                                labels_placeholder)
-    true_count += sess.run(eval_correct, feed_dict=feed_dict)
-  precision = true_count / num_examples
-  print('  Num examples: %d  Num correct: %d  Precision @ 1: %0.04f' %
-        (num_examples, true_count, precision))
+    precision = sess.run(eval_correct, feed_dict=feed_dict)
+  print('  Num examples: %d  Precision @ 1: %0.04f' %
+        (num_examples, precision))
 
 def ensure_name_has_port(tensor_name):
   """Makes sure that there's a port number at the end of the tensor name.
@@ -204,7 +202,7 @@ def run_training():
       # Write the summaries and print an overview fairly often.
       if step % 100 == 0:
         # Print status to stdout.
-        print('Step %d: loss = %.2f (%.3f sec)' % (step, loss_value, duration))
+        print('Step %d: loss = %.6f (%.3f sec)' % (step, loss_value, duration))
         # Update the events file.
         summary_str = sess.run(summary_op, feed_dict=feed_dict)
         summary_writer.add_summary(summary_str, step)

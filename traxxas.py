@@ -68,9 +68,8 @@ class ImageProcessor(threading.Thread):
                         # Keep track of time spent on prediction
                         inferenceStart = time.time()
                         image = image.convert('L')  # makes it greyscale
-                        image = image.crop((0, 60, 160, 120))
                         image_data = numpy.array(image)
-                        image_data = image_data.reshape(1, 19200 / 2)
+                        image_data = image_data.reshape(1, 19200)
                         steering, throttle = self.inference.direction(image_data)
                         inferenceTime += time.time()-inferenceStart
                         # serial.write("s"+str(steering)+"\n")
