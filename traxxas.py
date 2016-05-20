@@ -7,6 +7,7 @@ import numpy
 import model
 import serial
 import regression_data
+import os
 
 # Create a pool of image processors
 done = False
@@ -16,6 +17,9 @@ pool = []
 startTime = time.time()
 inferenceTime = 0
 count = 0
+
+if not os.path.exists("images"):
+	os.makedirs("images")
 
 serial = serial.Serial('/dev/ttyACM0', 115200, timeout=1)
 
