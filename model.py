@@ -49,10 +49,11 @@ class inference:
         self.sess.run(init)
 
     def direction(self, image_data):
-        result = self.sess.run(ensure_name_has_port(final_tensor_name),
+        steering = self.sess.run(ensure_name_has_port(final_tensor_name),
             { ensure_name_has_port(image_data_tensor_name): image_data })
 
-        return result
+        steering = (steering* (1979 - 980)) + 1552
+        return steering
         # print(result)
         argmax = np.argmax(result)
         if argmax == 0:
