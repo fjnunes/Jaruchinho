@@ -72,8 +72,8 @@ class ImageProcessor(threading.Thread):
                         image_data = image_data.reshape(1, 19200)
                         steering, throttle = self.inference.direction(image_data)
                         inferenceTime += time.time()-inferenceStart
-                        # serial.write("s"+str(steering)+"\n")
-                        # serial.write("t" + str(throttle) + "\n")
+                        serial.write("s"+str(steering)+"\n")
+                        serial.write("t" + str(throttle) + "\n")
 
                     # Evaluate frame rate performance
                     count += 1

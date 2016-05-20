@@ -53,7 +53,7 @@ class inference:
             { ensure_name_has_port(image_data_tensor_name): image_data })
 
         steering = (steering* (1979 - 980)) + 1552
-        return steering
+        return steering, 1650
         # print(result)
         argmax = np.argmax(result)
         if argmax == 0:
