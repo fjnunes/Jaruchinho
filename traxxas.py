@@ -6,6 +6,7 @@ from PIL import Image
 import numpy
 import model
 import serial
+import regression_data
 
 # Create a pool of image processors
 done = False
@@ -67,9 +68,7 @@ class ImageProcessor(threading.Thread):
                         # Perform forward pass using the image and send command to Arduino
                         # Keep track of time spent on prediction
                         inferenceStart = time.time()
-                        image = image.convert('L')  # makes it greyscale
-                        image_data = numpy.array(image)
-                        image_data = image_data.reshape(1, 19200)
+                        image_data = regression_data.extract_image_pil(image)
                         steering, throttle = self.inference.direction(image_data)
                         inferenceTime += time.time()-inferenceStart
                         serial.write("s"+str(steering)+"\n")
