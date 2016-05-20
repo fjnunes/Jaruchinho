@@ -20,7 +20,7 @@ import regression_data
 flags = tf.app.flags
 FLAGS = flags.FLAGS
 flags.DEFINE_float('learning_rate', 0.001, 'Initial learning rate.')
-flags.DEFINE_integer('max_steps', 20000, 'Number of steps to run trainer.')
+flags.DEFINE_integer('max_steps', 2000, 'Number of steps to run trainer.')
 flags.DEFINE_integer('hidden1', 256, 'Number of units in hidden layer 1.')
 flags.DEFINE_integer('hidden2', 256, 'Number of units in hidden layer 2.')
 flags.DEFINE_integer('batch_size', 256, 'Batch size.  '
@@ -198,8 +198,6 @@ def run_training():
                                feed_dict=feed_dict)
 
       duration = time.time() - start_time
-      image = regression_data.extract_image("../images/982_1645_2779.jpg")
-      result = sess.run(inference, feed_dict={images_placeholder:image})
 
       # Write the summaries and print an overview fairly often.
       if step % 100 == 0:
@@ -211,28 +209,28 @@ def run_training():
 
       # Save a checkpoint and evaluate the model periodically.
       if (step + 1) % 1000 == 0 or (step + 1) == FLAGS.max_steps:
-        # saver.save(sess, FLAGS.train_dir, global_step=step)
-        # Evaluate against the training set.
-        print('Training Data Eval:')
-        do_eval(sess,
-                eval_correct,
-                images_placeholder,
-                labels_placeholder,
-                data_sets.train)
-        # Evaluate against the validation set.
-        print('Validation Data Eval:')
-        do_eval(sess,
-                eval_correct,
-                images_placeholder,
-                labels_placeholder,
-                data_sets.validation)
-        # Evaluate against the test set.
-        print('Test Data Eval:')
-        do_eval(sess,
-                eval_correct,
-                images_placeholder,
-                labels_placeholder,
-                data_sets.test)
+        # # saver.save(sess, FLAGS.train_dir, global_step=step)
+        # # Evaluate against the training set.
+        # print('Training Data Eval:')
+        # do_eval(sess,
+        #         eval_correct,
+        #         images_placeholder,
+        #         labels_placeholder,
+        #         data_sets.train)
+        # # Evaluate against the validation set.
+        # print('Validation Data Eval:')
+        # do_eval(sess,
+        #         eval_correct,
+        #         images_placeholder,
+        #         labels_placeholder,
+        #         data_sets.validation)
+        # # Evaluate against the test set.
+        # print('Test Data Eval:')
+        # do_eval(sess,
+        #         eval_correct,
+        #         images_placeholder,
+        #         labels_placeholder,
+        #         data_sets.test)
 
         # Write out the trained graph and labels with the weights stored as constants.
         output_graph_def = graph_util.convert_variables_to_constants(
