@@ -95,6 +95,9 @@ def _read32(bytestream):
 def extract_image(filename):
   # image_data = gfile.FastGFile(filename, 'rb').read()
   image = Image.open(filename)
+  return extract_image_pil(image)
+
+def extract_image_pil(image):
   image.thumbnail((160, 120), Image.ANTIALIAS)
   image = image.convert('L') #makes it greyscale
   data = numpy.array(image)
