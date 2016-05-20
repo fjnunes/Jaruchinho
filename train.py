@@ -19,10 +19,10 @@ import regression_data
 # Basic model parameters as external flags.
 flags = tf.app.flags
 FLAGS = flags.FLAGS
-flags.DEFINE_float('learning_rate', 0.00001, 'Initial learning rate.')
-flags.DEFINE_integer('max_steps', 2000, 'Number of steps to run trainer.')
-flags.DEFINE_integer('hidden1', 128, 'Number of units in hidden layer 1.')
-flags.DEFINE_integer('hidden2', 32, 'Number of units in hidden layer 2.')
+flags.DEFINE_float('learning_rate', 0.001, 'Initial learning rate.')
+flags.DEFINE_integer('max_steps', 20000, 'Number of steps to run trainer.')
+flags.DEFINE_integer('hidden1', 256, 'Number of units in hidden layer 1.')
+flags.DEFINE_integer('hidden2', 256, 'Number of units in hidden layer 2.')
 flags.DEFINE_integer('batch_size', 256, 'Batch size.  '
                      'Must divide evenly into the dataset sizes.')
 flags.DEFINE_string('train_dir', 'data', 'Directory to put the training data.')
@@ -111,9 +111,9 @@ def do_eval(sess,
     feed_dict = fill_feed_dict(data_set,
                                images_placeholder,
                                labels_placeholder)
-    precision = sess.run(eval_correct, feed_dict=feed_dict)
+    precision += sess.run(eval_correct, feed_dict=feed_dict)
   print('  Num examples: %d  Precision @ 1: %0.04f' %
-        (num_examples, precision))
+        (num_examples, precision/steps_per_epoch))
 
 def ensure_name_has_port(tensor_name):
   """Makes sure that there's a port number at the end of the tensor name.
@@ -198,6 +198,8 @@ def run_training():
                                feed_dict=feed_dict)
 
       duration = time.time() - start_time
+      image = regression_data.extract_image("../images/982_1645_2779.jpg")
+      result = sess.run(inference, feed_dict={images_placeholder:image})
 
       # Write the summaries and print an overview fairly often.
       if step % 100 == 0:
@@ -232,15 +234,12 @@ def run_training():
                 labels_placeholder,
                 data_sets.test)
 
-    # result = sess.run(softmax, feed_dict={images_placeholder:input_data.extract_image("/Users/jaruche/Desktop/images/right/image1410.jpg").reshape(1, 120*160)})
+        # Write out the trained graph and labels with the weights stored as constants.
+        output_graph_def = graph_util.convert_variables_to_constants(
+          sess, sess.graph.as_graph_def(), ["final_result"])
 
-    # Write out the trained graph and labels with the weights stored as constants.
-    output_graph_def = graph_util.convert_variables_to_constants(
-      sess, sess.graph.as_graph_def(), ["final_result"])
-
-    with gfile.FastGFile("output_graph.pb", 'wb') as f:
-      f.write(output_graph_def.SerializeToString())
-
+        with gfile.FastGFile("output_graph.pb", 'wb') as f:
+          f.write(output_graph_def.SerializeToString())
 
 def main(_):
   run_training()

@@ -35,10 +35,11 @@ class DataSet(object):
       # assert images.shape[3] == 1
       images = images.reshape(images.shape[0],
                               images.shape[1] * images.shape[2])
-      if dtype == tf.float32:
-        # Convert from [0, 255] -> [0.0, 1.0].
-        images = images.astype(numpy.float32)
-        images = numpy.multiply(images, 1.0 / 255.0)
+      # if dtype == tf.float32:
+      #   # Convert from [0, 255] -> [0.0, 1.0].
+      #   images = images.astype(numpy.float32)
+      #   images = numpy.multiply(images, 1.0 / 255.0)
+
     self._images = images
     self._labels = labels
     self._epochs_completed = 0
@@ -62,14 +63,14 @@ class DataSet(object):
 
   def next_batch(self, batch_size, fake_data=False):
     """Return the next `batch_size` examples from this data set."""
-    if fake_data:
-      fake_image = [1] * 784
-      if self.one_hot:
-        fake_label = [1] + [0] * 9
-      else:
-        fake_label = 0
-      return [fake_image for _ in xrange(batch_size)], [
-          fake_label for _ in xrange(batch_size)]
+    # if fake_data:
+    #   fake_image = [1] * 784
+    #   if self.one_hot:
+    #     fake_label = [1] + [0] * 9
+    #   else:
+    #     fake_label = 0
+    #   return [fake_image for _ in xrange(batch_size)], [
+    #       fake_label for _ in xrange(batch_size)]
     start = self._index_in_epoch
     self._index_in_epoch += batch_size
     if self._index_in_epoch > self._num_examples:
@@ -97,6 +98,8 @@ def extract_image(filename):
   image.thumbnail((160, 120), Image.ANTIALIAS)
   image = image.convert('L') #makes it greyscale
   data = numpy.array(image)
+  data = data.astype(numpy.float32)
+  data = numpy.multiply(data, 1.0 / 255.0)
   data = data.reshape(1, 160*120)
 
   return data

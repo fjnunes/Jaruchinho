@@ -24,7 +24,7 @@ def inference(images, hidden1_units, hidden2_units):
         name='weights')
     biases = tf.Variable(tf.zeros([hidden1_units]),
                          name='biases')
-    hidden1 = tf.nn.relu(tf.matmul(images, weights) + biases)
+    hidden1 = tf.nn.relu(tf.nn.xw_plus_b(images, weights, biases))
   # Hidden 2
   with tf.name_scope('hidden2'):
     weights = tf.Variable(
@@ -33,7 +33,7 @@ def inference(images, hidden1_units, hidden2_units):
         name='weights')
     biases = tf.Variable(tf.zeros([hidden2_units]),
                          name='biases')
-    hidden2 = tf.nn.relu(tf.matmul(hidden1, weights) + biases)
+    hidden2 = tf.nn.relu(tf.nn.xw_plus_b(hidden1, weights, biases))
   # Linear
   with tf.name_scope('regression_linear'):
     weights = tf.Variable(
@@ -42,8 +42,7 @@ def inference(images, hidden1_units, hidden2_units):
         name='weights')
     bias = tf.Variable(tf.zeros([1]), name='bias')
 
-  regression = tf.nn.xw_plus_b(hidden2, weights, bias, name="final_result")
-  return regression
+  return tf.nn.xw_plus_b(hidden2, weights, bias, name="final_result")
 
 
 def loss(regression, labels):
@@ -55,7 +54,7 @@ def loss(regression, labels):
     loss: Loss tensor of type float.
   """
   inference = tf.reshape(regression, tf.shape(labels))
-  loss = tf.reduce_mean(tf.squared_difference(regression, labels), name='squared_mean')
+  loss = tf.reduce_mean(tf.squared_difference(inference, labels), name='squared_mean')
   return loss
 
 
