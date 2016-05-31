@@ -19,8 +19,8 @@ import regression_data
 # Basic model parameters as external flags.
 flags = tf.app.flags
 FLAGS = flags.FLAGS
-flags.DEFINE_float('learning_rate', 0.001, 'Initial learning rate.')
-flags.DEFINE_integer('max_steps', 2000, 'Number of steps to run trainer.')
+flags.DEFINE_float('learning_rate', 0.00001, 'Initial learning rate.')
+flags.DEFINE_integer('max_steps', 200000, 'Number of steps to run trainer.')
 flags.DEFINE_integer('hidden1', 256, 'Number of units in hidden layer 1.')
 flags.DEFINE_integer('hidden2', 256, 'Number of units in hidden layer 2.')
 flags.DEFINE_integer('batch_size', 256, 'Batch size.  '
@@ -39,10 +39,10 @@ flags.DEFINE_string('output_labels', './output_labels.txt',
 
 # Details of the training configuration.
 flags.DEFINE_integer(
-    'testing_percentage', 10,
+    'testing_percentage', 0,
     """What percentage of images to use as a test set.""")
 flags.DEFINE_integer(
-    'validation_percentage', 10,
+    'validation_percentage', 0,
     """What percentage of images to use as a validation set.""")
 
 
@@ -59,7 +59,7 @@ def placeholder_inputs(batch_size, name=''):
   # Note that the shapes of the placeholders match the shapes of the full
   # image and label tensors, except the first dimension is now batch_size
   # rather than the full size of the train or test data sets.
-  images_placeholder = tf.placeholder(tf.float32, shape=(None, regression.IMAGE_PIXELS), name=name)
+  images_placeholder = tf.placeholder(tf.float32, shape=(None, 30, 80, 3), name=name)
   labels_placeholder = tf.placeholder(tf.float32, shape=(batch_size))
   return images_placeholder, labels_placeholder
 
@@ -194,13 +194,13 @@ def run_training():
       # inspect the values of your Ops or variables, you may include them
       # in the list passed to sess.run() and the value tensors will be
       # returned in the tuple from the call.
-      _, loss_value = sess.run([train_op, loss],
+      _, loss_value, inference_val = sess.run([train_op, loss, inference],
                                feed_dict=feed_dict)
 
       duration = time.time() - start_time
 
       # Write the summaries and print an overview fairly often.
-      if step % 100 == 0:
+      if step % 10 == 0:
         # Print status to stdout.
         print('Step %d: loss = %.6f (%.3f sec)' % (step, loss_value, duration))
         # Update the events file.
@@ -209,22 +209,22 @@ def run_training():
 
       # Save a checkpoint and evaluate the model periodically.
       if (step + 1) % 1000 == 0 or (step + 1) == FLAGS.max_steps:
-        # # saver.save(sess, FLAGS.train_dir, global_step=step)
-        # # Evaluate against the training set.
+        # saver.save(sess, FLAGS.train_dir, global_step=step)
+        # Evaluate against the training set.
         # print('Training Data Eval:')
         # do_eval(sess,
         #         eval_correct,
         #         images_placeholder,
         #         labels_placeholder,
         #         data_sets.train)
-        # # Evaluate against the validation set.
+        # Evaluate against the validation set.
         # print('Validation Data Eval:')
         # do_eval(sess,
         #         eval_correct,
         #         images_placeholder,
         #         labels_placeholder,
         #         data_sets.validation)
-        # # Evaluate against the test set.
+        # Evaluate against the test set.
         # print('Test Data Eval:')
         # do_eval(sess,
         #         eval_correct,

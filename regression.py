@@ -16,15 +16,49 @@ def inference(images, hidden1_units, hidden2_units):
   Returns:
     softmax_linear: Output tensor with the computed logits.
   """
+
+  # conv1
+  with tf.variable_scope('conv1') as scope:
+      kernel = tf.truncated_normal([11, 11, 3, 64], stddev=1)
+      conv = tf.nn.conv2d(images, kernel, [1, 1, 1, 1], padding='SAME')
+      biases = tf.truncated_normal([64], 0.0)
+      bias = tf.nn.bias_add(conv, biases)
+      conv1 = tf.nn.relu(bias, name=scope.name)
+
+  # pool1
+  pool1 = tf.nn.max_pool(conv1, ksize=[1, 3, 3, 1], strides=[1, 2, 2, 1],
+                         padding='SAME', name='pool1')
+  # norm1
+  norm1 = tf.nn.lrn(pool1, 4, bias=1.0, alpha=0.001 / 9.0, beta=0.75,
+                    name='norm1')
+
+  # conv2
+  with tf.variable_scope('conv2') as scope:
+      kernel = tf.truncated_normal([5, 5, 64, 64], stddev=1)
+      conv = tf.nn.conv2d(norm1, kernel, [1, 1, 1, 1], padding='SAME')
+      biases = tf.truncated_normal([64], 0.1)
+      bias = tf.nn.bias_add(conv, biases)
+      conv2 = tf.nn.relu(bias, name=scope.name)
+
+  # norm2
+  norm2 = tf.nn.lrn(conv2, 4, bias=1.0, alpha=0.001 / 9.0, beta=0.75,
+                    name='norm2')
+  # pool2
+  pool2 = tf.nn.max_pool(norm2, ksize=[1, 3, 3, 1],
+                         strides=[1, 2, 2, 1], padding='SAME', name='pool2')
+
   # Hidden 1
   with tf.name_scope('hidden1'):
+    # Move everything into depth so we can perform a single matrix multiply.
+    reshape = tf.reshape(pool2, [-1, 8*20*64])
+    dim = reshape.get_shape()[1].value
     weights = tf.Variable(
-        tf.truncated_normal([IMAGE_PIXELS, hidden1_units],
-                            stddev=1.0 / math.sqrt(float(IMAGE_PIXELS))),
+        tf.truncated_normal([dim, hidden1_units],
+                            stddev=1.0 / math.sqrt(float(dim))),
         name='weights')
     biases = tf.Variable(tf.zeros([hidden1_units]),
                          name='biases')
-    hidden1 = tf.nn.relu(tf.nn.xw_plus_b(images, weights, biases))
+    hidden1 = tf.nn.relu(tf.nn.xw_plus_b(reshape, weights, biases))
   # Hidden 2
   with tf.name_scope('hidden2'):
     weights = tf.Variable(
@@ -93,4 +127,5 @@ def evaluation(regression, labels):
     that were predicted correctly.
   """
   # Return the number of true entries.
-  return tf.reduce_mean(tf.abs(tf.sub(regression, labels)))
+  inference = tf.reshape(regression, tf.shape(labels))
+  return tf.reduce_mean(tf.abs(tf.sub(inference, labels)))

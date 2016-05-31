@@ -33,8 +33,8 @@ class DataSet(object):
       # Convert shape from [num examples, rows, columns, depth]
       # to [num examples, rows*columns] (assuming depth == 1)
       # assert images.shape[3] == 1
-      images = images.reshape(images.shape[0],
-                              images.shape[1] * images.shape[2])
+      # images = images.reshape(images.shape[0],
+      #                         images.shape[1] * images.shape[2] * images.shape[3])
       # if dtype == tf.float32:
       #   # Convert from [0, 255] -> [0.0, 1.0].
       #   images = images.astype(numpy.float32)
@@ -98,12 +98,13 @@ def extract_image(filename):
   return extract_image_pil(image)
 
 def extract_image_pil(image):
-  image.thumbnail((160, 120), Image.ANTIALIAS)
-  image = image.convert('L') #makes it greyscale
+  image.thumbnail((80, 60), Image.ANTIALIAS)
+  # image = image.convert('L') #makes it greyscale
+  image = image.crop((0, 15, 80, 45))
   data = numpy.array(image)
   data = data.astype(numpy.float32)
   data = numpy.multiply(data, 1.0 / 255.0)
-  data = data.reshape(1, 160*120)
+  data = numpy.subtract(data, 0.5)
 
   return data
 
@@ -142,6 +143,7 @@ def create_image_lists(image_dir, testing_percentage, validation_percentage):
     base_name = os.path.basename(file_name)
     steering = float(re.search("(\d+)[^_]", base_name).group(0))
     label = (steering - 1552)/(1979-980)
+    # label = steering
 
     # We want to ignore anything after '_nohash_' in the file name when
     # deciding which set to put an image in, the data set creator has a way of
