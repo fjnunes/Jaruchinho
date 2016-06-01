@@ -72,7 +72,7 @@ class ImageProcessor(threading.Thread):
                         # Perform forward pass using the image and send command to Arduino
                         # Keep track of time spent on prediction
                         inferenceStart = time.time()
-                        image_data = regression_data.extract_image_pil(image)
+                        image_data = regression_data.extract_image_pil(image).reshape((1, 30, 80, 3))
                         steering, throttle = self.inference.direction(image_data)
                         inferenceTime += time.time()-inferenceStart
                         serial.write("s"+str(steering)+"\n")
